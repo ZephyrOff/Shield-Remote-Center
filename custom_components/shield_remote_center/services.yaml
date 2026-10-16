@@ -1,0 +1,189 @@
+send_toast:
+  target:
+    entity:
+      integration: shield_remote_center
+      domain: media_player
+  fields:
+    primary:
+      required: true
+      example: "Washing machine finished"
+      selector:
+        text:
+    secondary:
+      example: "The laundry can be taken out"
+      selector:
+        text:
+    icon:
+      example: "mdi:washing-machine"
+      selector:
+        icon:
+    color:
+      example: "[10, 132, 255]"
+      selector:
+        color_rgb:
+    timeout:
+      default: 8
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: s
+          mode: box
+    buttons:
+      example: '[{"label": "OK"}, {"label": "Remind me", "action": [{"action": "script.remind_laundry"}]}]'
+      selector:
+        object:
+
+send_banner:
+  target:
+    entity:
+      integration: shield_remote_center
+      domain: media_player
+  fields:
+    primary:
+      required: true
+      example: "Smoke detected"
+      selector:
+        text:
+    secondary:
+      example: "Kitchen"
+      selector:
+        text:
+    icon:
+      example: "mdi:smoke-detector-alert"
+      selector:
+        icon:
+    color:
+      example: "[255, 214, 10]"
+      selector:
+        color_rgb:
+    timeout:
+      default: 15
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: s
+          mode: box
+    buttons:
+      example: '[{"label": "Show camera", "action": [{"action": "script.show_kitchen_camera"}]}]'
+      selector:
+        object:
+
+send_popup:
+  target:
+    entity:
+      integration: shield_remote_center
+      domain: media_player
+  fields:
+    primary:
+      required: true
+      example: "Someone is at the gate"
+      selector:
+        text:
+    secondary:
+      example: "Open it from the TV?"
+      selector:
+        text:
+    icon:
+      example: "mdi:bell-ring"
+      selector:
+        icon:
+    color:
+      example: "[10, 132, 255]"
+      selector:
+        color_rgb:
+    timeout:
+      default: 30
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: s
+          mode: box
+    buttons:
+      example: '[{"label": "Open the gate", "action": [{"action": "script.open_gate"}]}, {"label": "Ignore"}]'
+      selector:
+        object:
+    camera_entity:
+      selector:
+        entity:
+          filter:
+            - domain: camera
+            - domain: image
+    refresh_rate:
+      default: 1
+      selector:
+        number:
+          min: 0.5
+          max: 10
+          step: 0.5
+          unit_of_measurement: s
+          mode: box
+
+send_camera:
+  target:
+    entity:
+      integration: shield_remote_center
+      domain: media_player
+  fields:
+    primary:
+      required: true
+      example: "Entrance"
+      selector:
+        text:
+    secondary:
+      example: "Motion detected"
+      selector:
+        text:
+    icon:
+      example: "mdi:cctv"
+      selector:
+        icon:
+    color:
+      example: "[48, 209, 88]"
+      selector:
+        color_rgb:
+    timeout:
+      default: 30
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: s
+          mode: box
+    buttons:
+      example: '[{"label": "Open the gate", "action": [{"action": "script.open_gate"}], "dismiss": false}, {"label": "Close"}]'
+      selector:
+        object:
+    camera_entity:
+      required: true
+      selector:
+        entity:
+          filter:
+            - domain: camera
+            - domain: image
+    refresh_rate:
+      default: 1
+      selector:
+        number:
+          min: 0.5
+          max: 10
+          step: 0.5
+          unit_of_measurement: s
+          mode: box
+
+dismiss:
+  target:
+    entity:
+      integration: shield_remote_center
+      domain: media_player
+  fields:
+    kind:
+      selector:
+        select:
+          options:
+            - toast
+            - banner
+            - popup
+            - camera

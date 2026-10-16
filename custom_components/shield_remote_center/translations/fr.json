@@ -1,0 +1,170 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SRC - Shield Remote Center",
+        "description": "Activez « Local API » dans les réglages de l'application sur la Shield, puis saisissez son adresse et son token d'appairage.",
+        "data": {
+          "host": "Hôte",
+          "port": "Port",
+          "token": "Token d'appairage"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Connexion impossible. La Shield est-elle allumée et l'API locale activée ?",
+      "invalid_auth": "La Shield a refusé le token d'appairage"
+    },
+    "abort": {
+      "already_configured": "Cette Shield est déjà configurée"
+    }
+  },
+  "services": {
+    "send_toast": {
+      "name": "Envoyer un toast",
+      "description": "Affiche un toast discret en haut de l'écran de la Shield.",
+      "fields": {
+        "primary": {
+          "name": "Texte principal",
+          "description": "Texte principal (titre) de la notification."
+        },
+        "secondary": {
+          "name": "Texte secondaire",
+          "description": "Deuxième ligne de la notification."
+        },
+        "icon": {
+          "name": "Icône",
+          "description": "Icône Material Design, par exemple mdi:door-open."
+        },
+        "color": {
+          "name": "Couleur",
+          "description": "Couleur d'accent de la notification : liste RGB, #RRGGBB ou nom de couleur."
+        },
+        "timeout": {
+          "name": "Délai",
+          "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
+        },
+        "buttons": {
+          "name": "Boutons",
+          "description": "Jusqu'à 4 boutons. Chacun a un libellé, un id optionnel (renvoyé dans l'évènement), des actions optionnelles à l'appui (par exemple un script) et dismiss (true par défaut)."
+        }
+      }
+    },
+    "send_banner": {
+      "name": "Envoyer une bannière",
+      "description": "Affiche une bannière large en haut de l'écran de la Shield.",
+      "fields": {
+        "primary": {
+          "name": "Texte principal",
+          "description": "Texte principal (titre) de la notification."
+        },
+        "secondary": {
+          "name": "Texte secondaire",
+          "description": "Deuxième ligne de la notification."
+        },
+        "icon": {
+          "name": "Icône",
+          "description": "Icône Material Design, par exemple mdi:door-open."
+        },
+        "color": {
+          "name": "Couleur",
+          "description": "Couleur d'accent de la notification : liste RGB, #RRGGBB ou nom de couleur."
+        },
+        "timeout": {
+          "name": "Délai",
+          "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
+        },
+        "buttons": {
+          "name": "Boutons",
+          "description": "Jusqu'à 4 boutons. Chacun a un libellé, un id optionnel (renvoyé dans l'évènement), des actions optionnelles à l'appui (par exemple un script) et dismiss (true par défaut)."
+        }
+      }
+    },
+    "send_popup": {
+      "name": "Envoyer un popup",
+      "description": "Affiche un popup en bas de l'écran de la Shield, avec éventuellement une caméra ou une image en direct.",
+      "fields": {
+        "primary": {
+          "name": "Texte principal",
+          "description": "Texte principal (titre) de la notification."
+        },
+        "secondary": {
+          "name": "Texte secondaire",
+          "description": "Deuxième ligne de la notification."
+        },
+        "icon": {
+          "name": "Icône",
+          "description": "Icône Material Design, par exemple mdi:door-open."
+        },
+        "color": {
+          "name": "Couleur",
+          "description": "Couleur d'accent de la notification : liste RGB, #RRGGBB ou nom de couleur."
+        },
+        "timeout": {
+          "name": "Délai",
+          "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
+        },
+        "buttons": {
+          "name": "Boutons",
+          "description": "Jusqu'à 4 boutons. Chacun a un libellé, un id optionnel (renvoyé dans l'évènement), des actions optionnelles à l'appui (par exemple un script) et dismiss (true par défaut)."
+        },
+        "camera_entity": {
+          "name": "Caméra",
+          "description": "Entité caméra ou image affichée en direct."
+        },
+        "refresh_rate": {
+          "name": "Intervalle de rafraîchissement",
+          "description": "Secondes entre deux images de la vue en direct."
+        }
+      }
+    },
+    "send_camera": {
+      "name": "Envoyer une caméra",
+      "description": "Affiche une vue caméra en direct par-dessus la vidéo en cours.",
+      "fields": {
+        "primary": {
+          "name": "Texte principal",
+          "description": "Texte principal (titre) de la notification."
+        },
+        "secondary": {
+          "name": "Texte secondaire",
+          "description": "Deuxième ligne de la notification."
+        },
+        "icon": {
+          "name": "Icône",
+          "description": "Icône Material Design, par exemple mdi:door-open."
+        },
+        "color": {
+          "name": "Couleur",
+          "description": "Couleur d'accent de la notification : liste RGB, #RRGGBB ou nom de couleur."
+        },
+        "timeout": {
+          "name": "Délai",
+          "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
+        },
+        "buttons": {
+          "name": "Boutons",
+          "description": "Jusqu'à 4 boutons. Chacun a un libellé, un id optionnel (renvoyé dans l'évènement), des actions optionnelles à l'appui (par exemple un script) et dismiss (true par défaut)."
+        },
+        "camera_entity": {
+          "name": "Caméra",
+          "description": "Entité caméra ou image affichée en direct."
+        },
+        "refresh_rate": {
+          "name": "Intervalle de rafraîchissement",
+          "description": "Secondes entre deux images de la vue en direct."
+        }
+      }
+    },
+    "dismiss": {
+      "name": "Fermer les notifications",
+      "description": "Ferme les notifications affichées sur la Shield.",
+      "fields": {
+        "kind": {
+          "name": "Type",
+          "description": "Ferme seulement ce type de notification. Toutes si vide."
+        }
+      }
+    }
+  }
+}

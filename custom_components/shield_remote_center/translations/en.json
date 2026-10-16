@@ -1,0 +1,170 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "SRC - Shield Remote Center",
+        "description": "Enable \"Local API\" in the app settings on the Shield, then enter its address and pairing token.",
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "token": "Pairing token"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect. Is the Shield awake and the local API enabled?",
+      "invalid_auth": "The Shield refused the pairing token"
+    },
+    "abort": {
+      "already_configured": "This Shield is already configured"
+    }
+  },
+  "services": {
+    "send_toast": {
+      "name": "Send a toast",
+      "description": "Display a discreet toast at the top of the Shield screen.",
+      "fields": {
+        "primary": {
+          "name": "Primary text",
+          "description": "Main text (title) of the notification."
+        },
+        "secondary": {
+          "name": "Secondary text",
+          "description": "Second line of the notification."
+        },
+        "icon": {
+          "name": "Icon",
+          "description": "Material Design icon, e.g. mdi:door-open."
+        },
+        "color": {
+          "name": "Color",
+          "description": "Accent color of the notification: RGB list, #RRGGBB or color name."
+        },
+        "timeout": {
+          "name": "Timeout",
+          "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
+        },
+        "buttons": {
+          "name": "Buttons",
+          "description": "Up to 4 buttons. Each one has a label, an optional id (reported in the event), optional actions to run when pressed (e.g. a script) and dismiss (default true)."
+        }
+      }
+    },
+    "send_banner": {
+      "name": "Send a banner",
+      "description": "Display a wide banner at the top of the Shield screen.",
+      "fields": {
+        "primary": {
+          "name": "Primary text",
+          "description": "Main text (title) of the notification."
+        },
+        "secondary": {
+          "name": "Secondary text",
+          "description": "Second line of the notification."
+        },
+        "icon": {
+          "name": "Icon",
+          "description": "Material Design icon, e.g. mdi:door-open."
+        },
+        "color": {
+          "name": "Color",
+          "description": "Accent color of the notification: RGB list, #RRGGBB or color name."
+        },
+        "timeout": {
+          "name": "Timeout",
+          "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
+        },
+        "buttons": {
+          "name": "Buttons",
+          "description": "Up to 4 buttons. Each one has a label, an optional id (reported in the event), optional actions to run when pressed (e.g. a script) and dismiss (default true)."
+        }
+      }
+    },
+    "send_popup": {
+      "name": "Send a popup",
+      "description": "Display a popup at the bottom of the Shield screen, optionally with a live camera or image.",
+      "fields": {
+        "primary": {
+          "name": "Primary text",
+          "description": "Main text (title) of the notification."
+        },
+        "secondary": {
+          "name": "Secondary text",
+          "description": "Second line of the notification."
+        },
+        "icon": {
+          "name": "Icon",
+          "description": "Material Design icon, e.g. mdi:door-open."
+        },
+        "color": {
+          "name": "Color",
+          "description": "Accent color of the notification: RGB list, #RRGGBB or color name."
+        },
+        "timeout": {
+          "name": "Timeout",
+          "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
+        },
+        "buttons": {
+          "name": "Buttons",
+          "description": "Up to 4 buttons. Each one has a label, an optional id (reported in the event), optional actions to run when pressed (e.g. a script) and dismiss (default true)."
+        },
+        "camera_entity": {
+          "name": "Camera",
+          "description": "Camera or image entity displayed live."
+        },
+        "refresh_rate": {
+          "name": "Refresh interval",
+          "description": "Seconds between two pictures of the live view."
+        }
+      }
+    },
+    "send_camera": {
+      "name": "Send a camera",
+      "description": "Display a live camera view over the video being played.",
+      "fields": {
+        "primary": {
+          "name": "Primary text",
+          "description": "Main text (title) of the notification."
+        },
+        "secondary": {
+          "name": "Secondary text",
+          "description": "Second line of the notification."
+        },
+        "icon": {
+          "name": "Icon",
+          "description": "Material Design icon, e.g. mdi:door-open."
+        },
+        "color": {
+          "name": "Color",
+          "description": "Accent color of the notification: RGB list, #RRGGBB or color name."
+        },
+        "timeout": {
+          "name": "Timeout",
+          "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
+        },
+        "buttons": {
+          "name": "Buttons",
+          "description": "Up to 4 buttons. Each one has a label, an optional id (reported in the event), optional actions to run when pressed (e.g. a script) and dismiss (default true)."
+        },
+        "camera_entity": {
+          "name": "Camera",
+          "description": "Camera or image entity displayed live."
+        },
+        "refresh_rate": {
+          "name": "Refresh interval",
+          "description": "Seconds between two pictures of the live view."
+        }
+      }
+    },
+    "dismiss": {
+      "name": "Dismiss notifications",
+      "description": "Close the notifications displayed on the Shield.",
+      "fields": {
+        "kind": {
+          "name": "Kind",
+          "description": "Only close this kind of notification. All of them if empty."
+        }
+      }
+    }
+  }
+}

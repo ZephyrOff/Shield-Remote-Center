@@ -1,0 +1,14 @@
+{
+  "domain": "shield_remote_center",
+  "name": "SRC - Shield Remote Center",
+  "after_dependencies": ["camera", "image"],
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/ZephyrOff/Shield-Remote-Center",
+  "integration_type": "device",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/ZephyrOff/Shield-Remote-Center/issues",
+  "requirements": [],
+  "version": "0.2.0",
+  "zeroconf": ["_src._tcp.local."]
+}
