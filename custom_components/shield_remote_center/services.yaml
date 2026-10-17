@@ -1,6 +1,6 @@
 send_toast:
   target:
-    button_{n}_entity:
+    entity:
       integration: shield_remote_center
       domain: media_player
   fields:
@@ -152,7 +152,7 @@ send_toast:
 
 send_banner:
   target:
-    button_{n}_entity:
+    entity:
       integration: shield_remote_center
       domain: media_player
   fields:
@@ -304,7 +304,7 @@ send_banner:
 
 send_popup:
   target:
-    button_{n}_entity:
+    entity:
       integration: shield_remote_center
       domain: media_player
   fields:
@@ -471,7 +471,7 @@ send_popup:
 
 send_camera:
   target:
-    button_{n}_entity:
+    entity:
       integration: shield_remote_center
       domain: media_player
   fields:
@@ -639,7 +639,7 @@ send_camera:
 
 dismiss:
   target:
-    button_{n}_entity:
+    entity:
       integration: shield_remote_center
       domain: media_player
   fields:
