@@ -19,6 +19,19 @@
       "already_configured": "Cette Shield est déjà configurée"
     }
   },
+  "selector": {
+    "button_type": {
+      "options": {
+        "close": "Fermer seulement la notification",
+        "script": "Lancer un script",
+        "toggle": "Basculer (interrupteur, lumière, booléen...)",
+        "turn_on": "Allumer / activer",
+        "turn_off": "Éteindre / désactiver",
+        "automation": "Déclencher une automatisation",
+        "action": "Seulement l'action personnalisée"
+      }
+    }
+  },
   "services": {
     "send_toast": {
       "name": "Envoyer un toast",
@@ -48,13 +61,25 @@
           "name": "Libellé",
           "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
         },
+        "type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
         "action": {
-          "name": "Action",
-          "description": "Actions lancées à l'appui sur le bouton, par exemple un script."
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
         },
         "dismiss": {
           "name": "Fermer à l'appui",
           "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "buttons": {
+          "name": "Boutons (YAML)",
+          "description": "Avancé : liste de boutons, chacun avec un libellé, des actions optionnelles et dismiss. S'ajoute aux boutons ci-dessus."
         }
       },
       "sections": {
@@ -68,10 +93,6 @@
         },
         "button_3": {
           "name": "Bouton 3",
-          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
-        },
-        "button_4": {
-          "name": "Bouton 4",
           "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
         }
       }
@@ -104,13 +125,25 @@
           "name": "Libellé",
           "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
         },
+        "type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
         "action": {
-          "name": "Action",
-          "description": "Actions lancées à l'appui sur le bouton, par exemple un script."
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
         },
         "dismiss": {
           "name": "Fermer à l'appui",
           "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "buttons": {
+          "name": "Boutons (YAML)",
+          "description": "Avancé : liste de boutons, chacun avec un libellé, des actions optionnelles et dismiss. S'ajoute aux boutons ci-dessus."
         }
       },
       "sections": {
@@ -124,10 +157,6 @@
         },
         "button_3": {
           "name": "Bouton 3",
-          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
-        },
-        "button_4": {
-          "name": "Bouton 4",
           "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
         }
       }
@@ -168,13 +197,25 @@
           "name": "Libellé",
           "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
         },
+        "type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
         "action": {
-          "name": "Action",
-          "description": "Actions lancées à l'appui sur le bouton, par exemple un script."
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
         },
         "dismiss": {
           "name": "Fermer à l'appui",
           "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "buttons": {
+          "name": "Boutons (YAML)",
+          "description": "Avancé : liste de boutons, chacun avec un libellé, des actions optionnelles et dismiss. S'ajoute aux boutons ci-dessus."
         }
       },
       "sections": {
@@ -188,10 +229,6 @@
         },
         "button_3": {
           "name": "Bouton 3",
-          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
-        },
-        "button_4": {
-          "name": "Bouton 4",
           "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
         }
       }
@@ -232,13 +269,25 @@
           "name": "Libellé",
           "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
         },
+        "type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
         "action": {
-          "name": "Action",
-          "description": "Actions lancées à l'appui sur le bouton, par exemple un script."
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
         },
         "dismiss": {
           "name": "Fermer à l'appui",
           "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "buttons": {
+          "name": "Boutons (YAML)",
+          "description": "Avancé : liste de boutons, chacun avec un libellé, des actions optionnelles et dismiss. S'ajoute aux boutons ci-dessus."
         }
       },
       "sections": {
@@ -252,10 +301,6 @@
         },
         "button_3": {
           "name": "Bouton 3",
-          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
-        },
-        "button_4": {
-          "name": "Bouton 4",
           "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
         }
       }

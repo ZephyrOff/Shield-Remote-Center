@@ -34,6 +34,32 @@ send_toast:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -47,6 +73,32 @@ send_toast:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -60,6 +112,32 @@ send_toast:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -67,19 +145,10 @@ send_toast:
           default: true
           selector:
             boolean:
-    button_4:
-      collapsed: true
-      fields:
-        label:
-          selector:
-            text:
-        action:
-          selector:
-            action:
-        dismiss:
-          default: true
-          selector:
-            boolean:
+    buttons:
+      example: '[{"label": "Open the gate", "action": [{"action": "script.open_gate"}]}]'
+      selector:
+        object:
 
 send_banner:
   target:
@@ -117,6 +186,32 @@ send_banner:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -130,6 +225,32 @@ send_banner:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -143,6 +264,32 @@ send_banner:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -150,19 +297,10 @@ send_banner:
           default: true
           selector:
             boolean:
-    button_4:
-      collapsed: true
-      fields:
-        label:
-          selector:
-            text:
-        action:
-          selector:
-            action:
-        dismiss:
-          default: true
-          selector:
-            boolean:
+    buttons:
+      example: '[{"label": "Open the gate", "action": [{"action": "script.open_gate"}]}]'
+      selector:
+        object:
 
 send_popup:
   target:
@@ -215,6 +353,32 @@ send_popup:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -228,6 +392,32 @@ send_popup:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -241,6 +431,32 @@ send_popup:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -248,19 +464,10 @@ send_popup:
           default: true
           selector:
             boolean:
-    button_4:
-      collapsed: true
-      fields:
-        label:
-          selector:
-            text:
-        action:
-          selector:
-            action:
-        dismiss:
-          default: true
-          selector:
-            boolean:
+    buttons:
+      example: '[{"label": "Open the gate", "action": [{"action": "script.open_gate"}]}]'
+      selector:
+        object:
 
 send_camera:
   target:
@@ -314,6 +521,32 @@ send_camera:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -327,6 +560,32 @@ send_camera:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -340,6 +599,32 @@ send_camera:
         label:
           selector:
             text:
+        type:
+          selector:
+            select:
+              translation_key: button_type
+              options:
+                - close
+                - script
+                - toggle
+                - turn_on
+                - turn_off
+                - automation
+                - action
+        entity:
+          selector:
+            entity:
+              filter:
+                - domain:
+                    - script
+                    - automation
+                    - input_boolean
+                    - switch
+                    - light
+                    - fan
+                    - cover
+                    - lock
+                    - scene
         action:
           selector:
             action:
@@ -347,19 +632,10 @@ send_camera:
           default: true
           selector:
             boolean:
-    button_4:
-      collapsed: true
-      fields:
-        label:
-          selector:
-            text:
-        action:
-          selector:
-            action:
-        dismiss:
-          default: true
-          selector:
-            boolean:
+    buttons:
+      example: '[{"label": "Open the gate", "action": [{"action": "script.open_gate"}]}]'
+      selector:
+        object:
 
 dismiss:
   target:

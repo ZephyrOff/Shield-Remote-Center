@@ -67,15 +67,26 @@ Fields of the four `send_*` actions:
 | `icon` | Any Material Design icon, e.g. `mdi:door-open` |
 | `color` | Accent color: `[r, g, b]`, `#RRGGBB` or a color name |
 | `timeout` | Seconds before it disappears. `0` keeps it until a button or the Back key is pressed. Defaults: toast 8, banner 15, popup 30, camera 30 |
-| `button_1` … `button_4` | Up to 4 buttons, one collapsible section each in the action editor (see below) |
+| `button_1` … `button_3` | Up to 3 buttons, one section each in the action editor (see below) |
+| `buttons` | Advanced: a YAML list of buttons (see below), added to the ones above |
 | `camera_entity` | `camera.*` or `image.*` entity shown live (required for `send_camera`, optional for `send_popup`) |
 | `refresh_rate` | Seconds between two pictures of the live view (0.5 to 10, default 1) |
 
-Each button section has a `label` (a button without label is not displayed), an `action` (the actions to run when the button is pressed, e.g. a script, chosen with the usual action editor) and `dismiss` (default `true`; set `false` to keep the notification open, e.g. to open a gate while still watching the camera). In YAML you can also add an `id` (reported in the event, defaults to the position).
+Each button section has:
+
+| Field | Description |
+|---|---|
+| `label` | Text of the button. A button without label is not displayed |
+| `type` | What the button does: only close the notification (`close`), run a script (`script`), toggle (`toggle`), turn on (`turn_on`), turn off (`turn_off`), trigger an automation (`automation`) or only the custom action (`action`) |
+| `entity` | The script, automation, switch, light, input_boolean, scene... the type acts on. If you give an entity without a `type`, it is guessed: a script is run, an automation is triggered, anything else is toggled |
+| `action` | Advanced: the usual action editor, for anything the types do not cover. It runs in addition to the type |
+| `dismiss` | Whether pressing the button closes the notification (default `true`; `false` keeps it open, e.g. to open a gate while still watching the camera) |
+
+In YAML you can also add an `id` to a button (reported in the event, defaults to the position), and use the `buttons:` list (same fields, up to 4 buttons in total) instead of or in addition to `button_1` … `button_3`.
 
 A **popup or a camera always has a button which closes it**: if none of your buttons closes it, a "Close" button is added at the end.
 
-A new notification replaces the previous one of the same kind. YAML users can alternatively give the buttons as a `buttons:` list of the same objects.
+A new notification replaces the previous one of the same kind.
 
 ### Examples
 
@@ -93,9 +104,14 @@ data:
   timeout: 30
   button_1:
     label: Open the gate
-    action:
-      - action: script.open_gate
+    type: script
+    entity: script.open_gate
   button_2:
+    label: Light on
+    type: turn_on
+    entity: light.driveway
+    dismiss: false
+  button_3:
     label: Ignore
 ```
 
@@ -111,9 +127,9 @@ data:
   camera_entity: camera.entrance
   button_1:
     label: Open the gate
+    type: script
+    entity: script.open_gate
     dismiss: false
-    action:
-      - action: script.open_gate
   # a "Close" button is added automatically
 ```
 

@@ -81,17 +81,89 @@ BUTTON_SCHEMA = vol.Schema(
 )
 
 
-# Simple form of the buttons: one collapsible section per button in the action editor
-BUTTON_KEYS = ("button_1", "button_2", "button_3", "button_4")
-BUTTON_SECTION_SCHEMA = vol.Schema(
-    {
-        # A button without label is not displayed
-        vol.Optional("label"): cv.string,
-        vol.Optional("id"): cv.string,
-        vol.Optional("action"): cv.SCRIPT_SCHEMA,
-        vol.Optional("dismiss", default=True): cv.boolean,
-    }
+# Simple form of the buttons: one section per button in the action editor, with a type of action to
+# choose and an entity, instead of writing the actions
+BUTTON_KEYS = ("button_1", "button_2", "button_3")
+
+# What the button does, besides closing the notification when "dismiss" is on
+TYPE_CLOSE = "close"
+TYPE_SCRIPT = "script"
+TYPE_TOGGLE = "toggle"
+TYPE_TURN_ON = "turn_on"
+TYPE_TURN_OFF = "turn_off"
+TYPE_AUTOMATION = "automation"
+TYPE_ACTION = "action"
+BUTTON_TYPES = (
+    TYPE_CLOSE,
+    TYPE_SCRIPT,
+    TYPE_TOGGLE,
+    TYPE_TURN_ON,
+    TYPE_TURN_OFF,
+    TYPE_AUTOMATION,
+    TYPE_ACTION,
 )
+
+# Service called on the chosen entity by each type of button
+PRESET_SERVICES = {
+    TYPE_SCRIPT: "script.turn_on",
+    TYPE_TOGGLE: "homeassistant.toggle",
+    TYPE_TURN_ON: "homeassistant.turn_on",
+    TYPE_TURN_OFF: "homeassistant.turn_off",
+    TYPE_AUTOMATION: "automation.trigger",
+}
+
+
+def _validate_button_section(section: dict[str, Any]) -> dict[str, Any]:
+    """An entity is needed by the types of buttons which act on one."""
+    if not section.get("label"):
+        return section  # not displayed
+    button_type = section.get("type")
+    if button_type in PRESET_SERVICES and not section.get("entity"):
+        raise vol.Invalid(f"An entity is required for a button of type {button_type}")
+    return section
+
+
+BUTTON_SECTION_SCHEMA = vol.All(
+    vol.Schema(
+        {
+            # A button without label is not displayed
+            vol.Optional("label"): cv.string,
+            vol.Optional("type"): vol.In(BUTTON_TYPES),
+            vol.Optional("entity"): cv.entity_id,
+            # Custom actions, for what the types do not cover
+            vol.Optional("action"): cv.SCRIPT_SCHEMA,
+            vol.Optional("id"): cv.string,
+            vol.Optional("dismiss", default=True): cv.boolean,
+        }
+    ),
+    _validate_button_section,
+)
+
+
+def button_actions(button: dict[str, Any]) -> list[dict[str, Any]]:
+    """The actions to run when a button is pressed: its type and its custom actions."""
+    actions: list[dict[str, Any]] = []
+    entity = button.get("entity")
+    button_type = button.get("type")
+    if button_type is None and entity:
+        # Not chosen: guess from the entity
+        domain = entity.split(".")[0]
+        button_type = (
+            TYPE_SCRIPT
+            if domain == "script"
+            else TYPE_AUTOMATION if domain == "automation" else TYPE_TOGGLE
+        )
+    if button_type in PRESET_SERVICES and entity:
+        step: dict[str, Any] = {
+            "action": PRESET_SERVICES[button_type],
+            "target": {"entity_id": entity},
+        }
+        if button_type == TYPE_AUTOMATION:
+            step["data"] = {"skip_condition": True}
+        actions.append(step)
+    if custom := button.get("action"):
+        actions.extend(custom)
+    return actions
 
 CLOSE_LABELS = {
     "fr": "Fermer",
@@ -175,6 +247,8 @@ def collect_buttons(kind: str, data: dict[str, Any], language: str) -> list[dict
         section = data.get(key)
         if section and section.get("label"):
             buttons.append(section)
+    # The same shape for both forms of buttons
+    buttons = [{**button, "actions": button_actions(button)} for button in buttons]
     if len(buttons) > MAX_BUTTONS:
         raise HomeAssistantError(f"At most {MAX_BUTTONS} buttons are supported")
     if kind in (KIND_POPUP, KIND_CAMERA) and not any(
@@ -220,10 +294,10 @@ class NotificationManager:
                     "dismiss": button.get("dismiss", True),
                 }
             )
-            if actions := button.get("action"):
+            if actions := button.get("actions"):
                 active.scripts[index] = Script(
                     self._hass,
-                    actions,
+                    cv.SCRIPT_SCHEMA(actions),
                     f"{self._entity.entity_id} {kind} button {button['label']}",
                     DOMAIN,
                 )

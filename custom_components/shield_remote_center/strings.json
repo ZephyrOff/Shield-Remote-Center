@@ -19,6 +19,19 @@
       "already_configured": "This Shield is already configured"
     }
   },
+  "selector": {
+    "button_type": {
+      "options": {
+        "close": "Only close the notification",
+        "script": "Run a script",
+        "toggle": "Toggle (switch, light, boolean...)",
+        "turn_on": "Turn on",
+        "turn_off": "Turn off",
+        "automation": "Trigger an automation",
+        "action": "Only the custom action"
+      }
+    }
+  },
   "services": {
     "send_toast": {
       "name": "Send a toast",
@@ -48,13 +61,25 @@
           "name": "Label",
           "description": "Text of the button. Leave empty to not display this button."
         },
+        "type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
         "action": {
-          "name": "Action",
-          "description": "Actions run when the button is pressed, e.g. a script."
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
         },
         "dismiss": {
           "name": "Close on press",
           "description": "Whether pressing the button closes the notification."
+        },
+        "buttons": {
+          "name": "Buttons (YAML)",
+          "description": "Advanced: list of buttons, each with a label, optional actions and dismiss. Added to the buttons above."
         }
       },
       "sections": {
@@ -68,10 +93,6 @@
         },
         "button_3": {
           "name": "Button 3",
-          "description": "Optional button. The remote control selects it and OK presses it."
-        },
-        "button_4": {
-          "name": "Button 4",
           "description": "Optional button. The remote control selects it and OK presses it."
         }
       }
@@ -104,13 +125,25 @@
           "name": "Label",
           "description": "Text of the button. Leave empty to not display this button."
         },
+        "type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
         "action": {
-          "name": "Action",
-          "description": "Actions run when the button is pressed, e.g. a script."
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
         },
         "dismiss": {
           "name": "Close on press",
           "description": "Whether pressing the button closes the notification."
+        },
+        "buttons": {
+          "name": "Buttons (YAML)",
+          "description": "Advanced: list of buttons, each with a label, optional actions and dismiss. Added to the buttons above."
         }
       },
       "sections": {
@@ -124,10 +157,6 @@
         },
         "button_3": {
           "name": "Button 3",
-          "description": "Optional button. The remote control selects it and OK presses it."
-        },
-        "button_4": {
-          "name": "Button 4",
           "description": "Optional button. The remote control selects it and OK presses it."
         }
       }
@@ -168,13 +197,25 @@
           "name": "Label",
           "description": "Text of the button. Leave empty to not display this button."
         },
+        "type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
         "action": {
-          "name": "Action",
-          "description": "Actions run when the button is pressed, e.g. a script."
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
         },
         "dismiss": {
           "name": "Close on press",
           "description": "Whether pressing the button closes the notification."
+        },
+        "buttons": {
+          "name": "Buttons (YAML)",
+          "description": "Advanced: list of buttons, each with a label, optional actions and dismiss. Added to the buttons above."
         }
       },
       "sections": {
@@ -188,10 +229,6 @@
         },
         "button_3": {
           "name": "Button 3",
-          "description": "Optional button. The remote control selects it and OK presses it."
-        },
-        "button_4": {
-          "name": "Button 4",
           "description": "Optional button. The remote control selects it and OK presses it."
         }
       }
@@ -232,13 +269,25 @@
           "name": "Label",
           "description": "Text of the button. Leave empty to not display this button."
         },
+        "type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
         "action": {
-          "name": "Action",
-          "description": "Actions run when the button is pressed, e.g. a script."
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
         },
         "dismiss": {
           "name": "Close on press",
           "description": "Whether pressing the button closes the notification."
+        },
+        "buttons": {
+          "name": "Buttons (YAML)",
+          "description": "Advanced: list of buttons, each with a label, optional actions and dismiss. Added to the buttons above."
         }
       },
       "sections": {
@@ -252,10 +301,6 @@
         },
         "button_3": {
           "name": "Button 3",
-          "description": "Optional button. The remote control selects it and OK presses it."
-        },
-        "button_4": {
-          "name": "Button 4",
           "description": "Optional button. The remote control selects it and OK presses it."
         }
       }
