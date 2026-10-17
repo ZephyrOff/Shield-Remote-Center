@@ -3,6 +3,7 @@ package be.digitalia.mediasession2mqtt.overlay
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.Handler
@@ -10,9 +11,17 @@ import android.os.Looper
 import android.provider.Settings
 import android.view.Gravity
 import android.view.KeyEvent
+import android.view.TextureView
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.VideoSize
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.ExoPlayer
 import be.digitalia.mediasession2mqtt.service.KeyInterceptService
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Inject
@@ -41,9 +50,12 @@ class OverlayManager(private val context: Context) {
         val timeoutRunnable: Runnable?,
         val buttons: List<View>,
         /** Increasing: the overlay shown last receives the keys. */
-        val order: Long
+        val order: Long,
+        val video: TextureView?
     ) {
         var selected = 0
+        var player: ExoPlayer? = null
+        var videoSize: VideoSize? = null
     }
 
     private val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -92,11 +104,111 @@ class OverlayManager(private val context: Context) {
         } else {
             null
         }
-        val overlay = ActiveOverlay(request, built.root, built.image, timeoutRunnable, built.buttons, ++shownCount)
+        val overlay = ActiveOverlay(request, built.root, built.image, timeoutRunnable, built.buttons, ++shownCount, built.video)
         active[request.kind] = overlay
         updateSelection(overlay)
-        built.firstFocus?.post { built.firstFocus.requestFocus() }
+        // When the window has the focus, the selection follows it
+        overlay.buttons.forEachIndexed { index, view ->
+            view.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    overlay.selected = index
+                    updateSelection(overlay)
+                }
+            }
+        }
+        // With the key interception service, the selection is drawn by the manager and the window has no focus
+        if (!KeyInterceptService.isConnected) {
+            built.firstFocus?.post { built.firstFocus.requestFocus() }
+        }
+        startStream(overlay)
         return null
+    }
+
+    /**
+     * Play the live stream of the notification in its video surface, muted, with a short buffer.
+     * The pictures stay displayed until the first video frame, and again if the stream fails.
+     */
+    @androidx.annotation.OptIn(UnstableApi::class)
+    private fun startStream(overlay: ActiveOverlay) {
+        val url = overlay.request.streamUrl ?: return
+        val video = overlay.video ?: return
+        try {
+            val loadControl = DefaultLoadControl.Builder()
+                .setBufferDurationsMs(1_000, 4_000, 500, 1_000)
+                .build()
+            val player = ExoPlayer.Builder(context).setLoadControl(loadControl).build()
+            overlay.player = player
+            player.volume = 0f
+            player.setVideoTextureView(video)
+            video.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> overlay.videoSize?.let { applyVideoTransform(video, it) } }
+            player.addListener(object : Player.Listener {
+                override fun onRenderedFirstFrame() {
+                    overlay.image?.visibility = View.GONE
+                }
+
+                override fun onVideoSizeChanged(videoSize: VideoSize) {
+                    overlay.videoSize = videoSize
+                    applyVideoTransform(video, videoSize)
+                }
+
+                override fun onPlayerError(error: PlaybackException) {
+                    streamFailed(overlay)
+                }
+            })
+            player.setMediaItem(
+                MediaItem.Builder()
+                    .setUri(url)
+                    .setLiveConfiguration(
+                        MediaItem.LiveConfiguration.Builder()
+                            .setTargetOffsetMs(2_000)
+                            .setMaxPlaybackSpeed(1.08f)
+                            .build()
+                    )
+                    .build()
+            )
+            player.playWhenReady = true
+            player.prepare()
+        } catch (_: Exception) {
+            streamFailed(overlay)
+        }
+    }
+
+    /** Fill the surface with the video, cropping it like the pictures. */
+    private fun applyVideoTransform(video: TextureView, size: VideoSize) {
+        val viewWidth = video.width.toFloat()
+        val viewHeight = video.height.toFloat()
+        if (viewWidth == 0f || viewHeight == 0f || size.width == 0 || size.height == 0) {
+            return
+        }
+        val videoAspect = size.width * size.pixelWidthHeightRatio / size.height
+        val viewAspect = viewWidth / viewHeight
+        // The texture is stretched to the view: restore the aspect ratio of the video, then fill the view
+        val matrix = Matrix()
+        if (videoAspect > viewAspect) {
+            matrix.setScale(videoAspect / viewAspect, 1f, viewWidth / 2, viewHeight / 2)
+        } else {
+            matrix.setScale(1f, viewAspect / videoAspect, viewWidth / 2, viewHeight / 2)
+        }
+        video.setTransform(matrix)
+    }
+
+    /** The stream can not be played: show the pictures again and tell the client, which sends them. */
+    private fun streamFailed(overlay: ActiveOverlay) {
+        releasePlayer(overlay)
+        overlay.image?.visibility = View.VISIBLE
+        if (active[overlay.request.kind] === overlay) {
+            eventListener?.invoke(OverlayEvent(overlay.request.notificationId, "stream_failed"))
+        }
+    }
+
+    private fun releasePlayer(overlay: ActiveOverlay) {
+        overlay.player?.let {
+            overlay.player = null
+            try {
+                it.release()
+            } catch (_: Exception) {
+            }
+        }
     }
 
     /**
@@ -147,6 +259,7 @@ class OverlayManager(private val context: Context) {
         }
         active.remove(kind)
         overlay.timeoutRunnable?.let { handler.removeCallbacks(it) }
+        releasePlayer(overlay)
         try {
             windowManager.removeView(overlay.root)
         } catch (_: Exception) {

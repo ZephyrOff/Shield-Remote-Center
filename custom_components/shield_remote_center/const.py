@@ -32,6 +32,7 @@ ATTR_TIMEOUT = "timeout"
 ATTR_BUTTONS = "buttons"
 ATTR_CAMERA_ENTITY = "camera_entity"
 ATTR_REFRESH_RATE = "refresh_rate"
+ATTR_LIVE = "live"
 ATTR_KIND = "kind"
 
 DEFAULT_REFRESH_RATE = 1.0

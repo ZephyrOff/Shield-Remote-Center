@@ -60,6 +60,8 @@ android {
 
 dependencies {
     implementation(libs.androidx.annotation)
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.hls)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kmqtt.common)
     implementation(libs.kmqtt.client)

@@ -70,7 +70,8 @@ Fields of the four `send_*` actions:
 | `button_1_label`, `button_1_type`… | Up to 3 buttons, one group of fields each in the action editor (see below) |
 | `buttons` | Advanced: a YAML list of buttons (see below), added to the ones above |
 | `camera_entity` | `camera.*` or `image.*` entity shown live (required for `send_camera`, optional for `send_popup`) |
-| `refresh_rate` | Seconds between two pictures of the live view (0.5 to 10, default 1) |
+| `live` | Play the live video of the camera (default `true`, see "Live video" below). With `false`, or if the camera has no stream, pictures are used |
+| `refresh_rate` | Seconds between two pictures when pictures are used (0.5 to 10, default 1) |
 
 Each button (`button_1_…`, `button_2_…`, `button_3_…`) has these fields, shown as a group in the action editor:
 
@@ -166,21 +167,30 @@ While a notification with buttons is displayed, the arrows select a button, OK p
 
 To check that the service receives the keys, with a debug build of the app: `adb logcat -s KeyInterceptService`, then press keys on the remote.
 
+## Live video
+
+For a `camera.*` entity which has a stream (the one Home Assistant uses for its own live view, e.g. an RTSP camera), the Shield plays the live video: Home Assistant serves an HLS stream and the app plays it muted, a few seconds behind real time. A single picture is shown while the video starts. Requirements:
+
+- The `stream` integration works in Home Assistant (check that the live view of the camera works in the dashboard).
+- The Shield can reach Home Assistant at its **internal URL** (*Settings → System → Network*). The camera itself does not need to be reachable from the Shield and its credentials are never sent to it.
+
+Cameras without a stream, and `image.*` entities, use pictures. If the Shield can not play the video, it switches back to pictures by itself.
+
 ## Protocol
 
 WebSocket `ws://<host>:<port>/ws` with header `Authorization: Bearer <token>`; JSON text frames, plus binary frames for pictures.
 
 - App → HA, on connection then on each change: `{"type":"state","state":"playing|paused|idle","app_id":"...","title":"..."|null,"duration_ms":123|null,"position_ms":123|null,"position_updated_at":"2026-10-16T13:00:00.000Z","supported_actions":["play","pause","stop","seek","next","previous"]}`
 - HA → app: `{"id":1,"type":"command","command":"play|pause|play_pause|stop|next|previous|seek","position_ms":120000}`
-- HA → app: `{"id":2,"type":"notify","notification_id":42,"kind":"toast|banner|popup|camera","primary":"...","secondary":"...","icon":"mdi:bell","color":"#0A84FF","timeout":8,"buttons":[{"id":"0","label":"OK","dismiss":true}],"has_media":false}`
+- HA → app: `{"id":2,"type":"notify","notification_id":42,"kind":"toast|banner|popup|camera","primary":"...","secondary":"...","icon":"mdi:bell","color":"#0A84FF","timeout":8,"buttons":[{"id":"0","label":"OK","dismiss":true}],"has_media":false,"stream_url":"http://ha.local:8123/api/hls/…/master_playlist.m3u8"}` (`stream_url` is optional)
 - HA → app: `{"id":3,"type":"dismiss","kind":"toast"}` (all kinds if omitted)
 - HA → app, binary: 4 bytes big-endian `notification_id` followed by a JPEG or PNG picture.
 - App → HA: `{"id":1,"type":"result","ok":true}` or `{"id":1,"type":"result","ok":false,"error":"no_session|unsupported|unknown_command|invalid_position|invalid_message|overlay_disabled|overlay_permission|overlay_failed|failed"}`
-- App → HA: `{"type":"event","event":"button","notification_id":42,"button_id":"0"}` and `{"type":"event","event":"dismissed","notification_id":42,"reason":"timeout"}`
+- App → HA: `{"type":"event","event":"button","notification_id":42,"button_id":"0"}` and `{"type":"event","event":"dismissed","notification_id":42,"reason":"timeout"}` and `{"type":"event","event":"stream_failed","notification_id":42}` (the video can not be played: send pictures)
 
 ## Known limitations
 
 - Some applications report no title (e.g. Netflix) or an unreliable position (e.g. Prime Video); the integration shows what the application declares.
 - A playback command is only available if the application declares the matching action.
-- The live view is a series of pictures taken by Home Assistant (about 1 per second by default), not a video stream.
+- Pictures (when the live video is not used) are taken by Home Assistant about once per second by default: this is a slideshow, not a video.
 - Seek is not validated on the apps yet.

@@ -10,6 +10,7 @@ import android.graphics.drawable.StateListDrawable
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.KeyEvent
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewOutlineProvider
@@ -20,7 +21,14 @@ import android.widget.TextView
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-internal class BuiltOverlay(val root: View, val image: ImageView?, val firstFocus: View?, val buttons: List<View>)
+internal class BuiltOverlay(
+    val root: View,
+    val image: ImageView?,
+    val firstFocus: View?,
+    val buttons: List<View>,
+    /** Surface of the live video, when the request has a stream. The [image] is displayed over it until it plays. */
+    val video: TextureView? = null
+)
 
 /** Root view which turns the Back key into a dismissal. */
 private class OverlayRoot(context: Context, private val onBack: () -> Unit) : FrameLayout(context) {
@@ -122,14 +130,10 @@ internal class OverlayViewFactory(private val context: Context) {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL
         }
-        var image: ImageView? = null
+        var media: MediaViews? = null
         if (request.hasMedia) {
-            image = ImageView(context).apply {
-                scaleType = ImageView.ScaleType.CENTER_CROP
-                background = roundedRect(0xFF10171F.toInt(), u(24))
-                clipRounded(this, u(24))
-            }
-            header.addView(image, LinearLayout.LayoutParams(u(240), u(150)))
+            media = mediaViews(request, u(24))
+            header.addView(media.container, LinearLayout.LayoutParams(u(240), u(150)))
         } else {
             header.addView(iconCircle(request.icon, "bell-ring", u(96), accent, Color.WHITE), LinearLayout.LayoutParams(u(96), u(96)))
         }
@@ -146,7 +150,7 @@ internal class OverlayViewFactory(private val context: Context) {
             sheet,
             FrameLayout.LayoutParams(min(u(1040), screenWidth), ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
         )
-        return BuiltOverlay(root, image, buttons.first, buttons.views)
+        return BuiltOverlay(root, media?.image, buttons.first, buttons.views, media?.video)
     }
 
     private fun buildCamera(request: OverlayRequest, onButton: (OverlayButton) -> Unit, onBack: () -> Unit): BuiltOverlay {
@@ -156,8 +160,8 @@ internal class OverlayViewFactory(private val context: Context) {
             background = roundedRect(0xFF10171F.toInt(), u(32))
             clipRounded(this, u(32))
         }
-        val image = ImageView(context).apply { scaleType = ImageView.ScaleType.CENTER_CROP }
-        card.addView(image, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
+        val media = mediaViews(request, u(32))
+        card.addView(media.container, FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
 
         val top = LinearLayout(context).apply { orientation = LinearLayout.VERTICAL }
         val chip = LinearLayout(context).apply {
@@ -200,7 +204,23 @@ internal class OverlayViewFactory(private val context: Context) {
             })
         }
         root.addView(card, FrameLayout.LayoutParams(u(440), u(248)))
-        return BuiltOverlay(root, image, buttons.first, buttons.views)
+        return BuiltOverlay(root, media.image, buttons.first, buttons.views, media.video)
+    }
+
+    private class MediaViews(val container: FrameLayout, val image: ImageView, val video: TextureView?)
+
+    /** The media of a popup or a camera: pictures, and a video surface below them if there is a stream. */
+    private fun mediaViews(request: OverlayRequest, cornerRadius: Int): MediaViews {
+        val container = FrameLayout(context).apply {
+            background = roundedRect(0xFF10171F.toInt(), cornerRadius)
+            clipRounded(this, cornerRadius)
+        }
+        val match = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        val video = if (request.streamUrl != null) TextureView(context) else null
+        video?.let { container.addView(it, match) }
+        val image = ImageView(context).apply { scaleType = ImageView.ScaleType.CENTER_CROP }
+        container.addView(image, FrameLayout.LayoutParams(match))
+        return MediaViews(container, image, video)
     }
 
     private class ButtonRow(val row: LinearLayout?, val first: View?, val views: List<View>)
@@ -235,7 +255,7 @@ internal class OverlayViewFactory(private val context: Context) {
                 setTextColor(
                     ColorStateList(
                         arrayOf(
-                            intArrayOf(android.R.attr.state_focused),
+                            intArrayOf(android.R.attr.state_focused, android.R.attr.state_window_focused),
                             intArrayOf(android.R.attr.state_pressed),
                             intArrayOf(android.R.attr.state_selected),
                             intArrayOf()
@@ -250,7 +270,8 @@ internal class OverlayViewFactory(private val context: Context) {
                         cornerRadius = PILL_RADIUS
                         setStroke(u(3), ring)
                     }
-                    addState(intArrayOf(android.R.attr.state_focused), focused)
+                    // A view keeps its focus while its window has not: only a focused window draws it
+                    addState(intArrayOf(android.R.attr.state_focused, android.R.attr.state_window_focused), focused)
                     addState(intArrayOf(android.R.attr.state_pressed), focused)
                     // Selection driven by the key interception service, independent from the window focus
                     addState(intArrayOf(android.R.attr.state_selected), focused)

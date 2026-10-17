@@ -12,11 +12,13 @@ from typing import Any
 import voluptuous as vol
 
 from homeassistant.components.camera import async_get_image as async_get_camera_image
+from homeassistant.components.camera import async_request_stream
 from homeassistant.components.image import async_get_image as async_get_image_entity
 from homeassistant.core import Context, HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.network import NoURLAvailableError, get_url
 from homeassistant.helpers.script import Script
 from homeassistant.util import color as color_util
 
@@ -27,6 +29,7 @@ from .const import (
     ATTR_COLOR,
     ATTR_ICON,
     ATTR_KIND,
+    ATTR_LIVE,
     ATTR_PRIMARY,
     ATTR_REFRESH_RATE,
     ATTR_SECONDARY,
@@ -187,6 +190,8 @@ def _schema(kind: str) -> dict[Any, Any]:
         schema[vol.Optional(ATTR_REFRESH_RATE, default=DEFAULT_REFRESH_RATE)] = vol.All(
             vol.Coerce(float), vol.Range(min=0.5, max=10)
         )
+        # Play the live video of the camera when it has a stream, instead of pictures
+        schema[vol.Optional(ATTR_LIVE, default=True)] = cv.boolean
     return schema
 
 
@@ -220,6 +225,10 @@ class _Active:
     button_labels: list[str] = field(default_factory=list)
     scripts: dict[int, Script] = field(default_factory=dict)
     stream: asyncio.Task | None = None
+    # Live view, to send pictures again if the video stream fails
+    camera_entity: str | None = None
+    refresh_rate: float = 1.0
+    duration: float = 0.0
 
     def cancel_stream(self) -> None:
         """Stop sending images."""
@@ -301,6 +310,9 @@ class NotificationManager:
                 )
 
         camera_entity = data.get(ATTR_CAMERA_ENTITY)
+        stream_url = None
+        if camera_entity and data.get(ATTR_LIVE, True):
+            stream_url = await self._async_stream_url(camera_entity)
         payload: dict[str, Any] = {
             "notification_id": active.notification_id,
             "kind": kind,
@@ -309,6 +321,8 @@ class NotificationManager:
             "buttons": buttons,
             "has_media": camera_entity is not None,
         }
+        if stream_url:
+            payload["stream_url"] = stream_url
         for key in (ATTR_SECONDARY, ATTR_ICON, ATTR_COLOR):
             if key in data:
                 payload[key] = data[key]
@@ -331,11 +345,13 @@ class NotificationManager:
             previous.cancel_stream()
 
         if camera_entity:
-            duration = data[ATTR_TIMEOUT] + 2 if data[ATTR_TIMEOUT] else MAX_STREAM_SECONDS
-            active.stream = self._hass.async_create_background_task(
-                self._stream(active, camera_entity, data[ATTR_REFRESH_RATE], duration),
-                f"{DOMAIN} live view {camera_entity}",
+            active.camera_entity = camera_entity
+            active.refresh_rate = data[ATTR_REFRESH_RATE]
+            active.duration = (
+                data[ATTR_TIMEOUT] + 2 if data[ATTR_TIMEOUT] else MAX_STREAM_SECONDS
             )
+            # With a video stream, a single picture is shown while the video starts
+            self._start_pictures(active, single=bool(stream_url))
 
     async def async_dismiss(self, kind: str | None) -> None:
         """Close the notifications of a kind, or all of them."""
@@ -368,6 +384,9 @@ class NotificationManager:
         elif event == "dismissed":
             self._forget(active)
             self._fire(active, "dismissed", reason=data.get("reason"))
+        elif event == "stream_failed":
+            _LOGGER.debug("The Shield can not play the stream of %s", active.camera_entity)
+            self._start_pictures(active, single=False)
 
     def _handle_button(self, active: _Active, data: dict[str, Any]) -> None:
         try:
@@ -403,13 +422,42 @@ class NotificationManager:
         if self._active.get(active.kind) is active:
             del self._active[active.kind]
 
+    async def _async_stream_url(self, entity_id: str) -> str | None:
+        """The HLS stream of a camera, served by Home Assistant, or None if there is none."""
+        if not entity_id.startswith("camera."):
+            return None
+        try:
+            path = await async_request_stream(self._hass, entity_id, "hls")
+            # The Shield reaches Home Assistant on the local network
+            base = get_url(
+                self._hass, allow_external=False, allow_cloud=False, prefer_external=False
+            )
+        except (HomeAssistantError, NoURLAvailableError) as err:
+            _LOGGER.debug("No live stream for %s: %s", entity_id, err)
+            return None
+        return f"{base}{path}"
+
+    def _start_pictures(self, active: _Active, single: bool) -> None:
+        """Send the pictures of the camera: only one, or as a live view until the end."""
+        if active.camera_entity is None or (active.stream and not active.stream.done()):
+            return
+        active.stream = self._hass.async_create_background_task(
+            self._stream(
+                active,
+                active.camera_entity,
+                active.refresh_rate,
+                0 if single else active.duration,
+            ),
+            f"{DOMAIN} pictures {active.camera_entity}",
+        )
+
     async def _stream(
         self, active: _Active, entity_id: str, refresh_rate: float, duration: float
     ) -> None:
-        """Send the pictures of a camera to the notification, as a live view."""
+        """Send the pictures of a camera to the notification. duration 0: a single picture."""
         loop = asyncio.get_running_loop()
         end = loop.time() + duration
-        while loop.time() < end:
+        while True:
             started = loop.time()
             try:
                 image = await _async_get_image(self._hass, entity_id)
@@ -419,4 +467,6 @@ class NotificationManager:
             except (HomeAssistantError, TimeoutError) as err:
                 # The camera may be temporarily unavailable: try again
                 _LOGGER.debug("No image from %s: %s", entity_id, err)
+            if loop.time() >= end:
+                return
             await asyncio.sleep(max(0.1, refresh_rate - (loop.time() - started)))

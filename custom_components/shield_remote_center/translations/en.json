@@ -257,9 +257,13 @@
           "name": "Camera",
           "description": "Camera or image entity displayed live."
         },
+        "live": {
+          "name": "Live video",
+          "description": "Play the live video of the camera (HLS stream served by Home Assistant) instead of pictures. Falls back to pictures if the camera has no stream."
+        },
         "refresh_rate": {
-          "name": "Refresh interval",
-          "description": "Seconds between two pictures of the live view."
+          "name": "Picture interval",
+          "description": "Seconds between two pictures when the live video is not used or fails."
         },
         "icon": {
           "name": "Icon",
@@ -369,9 +373,13 @@
           "name": "Camera",
           "description": "Camera or image entity displayed live."
         },
+        "live": {
+          "name": "Live video",
+          "description": "Play the live video of the camera (HLS stream served by Home Assistant) instead of pictures. Falls back to pictures if the camera has no stream."
+        },
         "refresh_rate": {
-          "name": "Refresh interval",
-          "description": "Seconds between two pictures of the live view."
+          "name": "Picture interval",
+          "description": "Seconds between two pictures when the live video is not used or fails."
         },
         "icon": {
           "name": "Icon",

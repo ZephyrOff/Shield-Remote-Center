@@ -323,6 +323,10 @@ send_popup:
           filter:
             - domain: camera
             - domain: image
+    live:
+      default: true
+      selector:
+        boolean:
     refresh_rate:
       default: 1
       selector:
@@ -491,6 +495,10 @@ send_camera:
           filter:
             - domain: camera
             - domain: image
+    live:
+      default: true
+      selector:
+        boolean:
     refresh_rate:
       default: 1
       selector:

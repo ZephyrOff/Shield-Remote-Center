@@ -35,7 +35,9 @@ class OverlayRequest(
     val color: Int?,
     val timeoutMillis: Long,
     val buttons: List<OverlayButton>,
-    val hasMedia: Boolean
+    val hasMedia: Boolean,
+    /** HLS live stream of the media, played instead of the pictures when available. */
+    val streamUrl: String? = null
 )
 
 class OverlayEvent(
@@ -88,7 +90,8 @@ fun parseOverlayRequest(json: JSONObject): OverlayRequest? {
         color = color,
         timeoutMillis = (json.optDouble("timeout", 0.0).coerceIn(0.0, MAX_TIMEOUT_SECONDS) * 1000).toLong(),
         buttons = buttons,
-        hasMedia = json.optBoolean("has_media", false)
+        hasMedia = json.optBoolean("has_media", false),
+        streamUrl = json.optString("stream_url").takeIf { it.startsWith("http://") || it.startsWith("https://") }
     )
 }
 
