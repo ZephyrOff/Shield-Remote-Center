@@ -57,23 +57,63 @@
           "name": "Timeout",
           "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
         },
-        "label": {
+        "button_1_label": {
           "name": "Label",
           "description": "Text of the button. Leave empty to not display this button."
         },
-        "type": {
+        "button_1_type": {
           "name": "What it does",
           "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
         },
-        "entity": {
+        "button_1_entity": {
           "name": "Entity",
           "description": "The script, automation, switch, light, boolean... the button acts on."
         },
-        "action": {
+        "button_1_action": {
           "name": "Custom action",
           "description": "Advanced: other actions run when the button is pressed, in addition to the above."
         },
-        "dismiss": {
+        "button_1_dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        },
+        "button_2_label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "button_2_type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "button_2_entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
+        "button_2_action": {
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
+        },
+        "button_2_dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        },
+        "button_3_label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "button_3_type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "button_3_entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
+        "button_3_action": {
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
+        },
+        "button_3_dismiss": {
           "name": "Close on press",
           "description": "Whether pressing the button closes the notification."
         },
@@ -121,23 +161,63 @@
           "name": "Timeout",
           "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
         },
-        "label": {
+        "button_1_label": {
           "name": "Label",
           "description": "Text of the button. Leave empty to not display this button."
         },
-        "type": {
+        "button_1_type": {
           "name": "What it does",
           "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
         },
-        "entity": {
+        "button_1_entity": {
           "name": "Entity",
           "description": "The script, automation, switch, light, boolean... the button acts on."
         },
-        "action": {
+        "button_1_action": {
           "name": "Custom action",
           "description": "Advanced: other actions run when the button is pressed, in addition to the above."
         },
-        "dismiss": {
+        "button_1_dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        },
+        "button_2_label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "button_2_type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "button_2_entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
+        "button_2_action": {
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
+        },
+        "button_2_dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        },
+        "button_3_label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "button_3_type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "button_3_entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
+        "button_3_action": {
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
+        },
+        "button_3_dismiss": {
           "name": "Close on press",
           "description": "Whether pressing the button closes the notification."
         },
@@ -193,23 +273,63 @@
           "name": "Timeout",
           "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
         },
-        "label": {
+        "button_1_label": {
           "name": "Label",
           "description": "Text of the button. Leave empty to not display this button."
         },
-        "type": {
+        "button_1_type": {
           "name": "What it does",
           "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
         },
-        "entity": {
+        "button_1_entity": {
           "name": "Entity",
           "description": "The script, automation, switch, light, boolean... the button acts on."
         },
-        "action": {
+        "button_1_action": {
           "name": "Custom action",
           "description": "Advanced: other actions run when the button is pressed, in addition to the above."
         },
-        "dismiss": {
+        "button_1_dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        },
+        "button_2_label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "button_2_type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "button_2_entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
+        "button_2_action": {
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
+        },
+        "button_2_dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        },
+        "button_3_label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "button_3_type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "button_3_entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
+        "button_3_action": {
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
+        },
+        "button_3_dismiss": {
           "name": "Close on press",
           "description": "Whether pressing the button closes the notification."
         },
@@ -265,23 +385,63 @@
           "name": "Timeout",
           "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
         },
-        "label": {
+        "button_1_label": {
           "name": "Label",
           "description": "Text of the button. Leave empty to not display this button."
         },
-        "type": {
+        "button_1_type": {
           "name": "What it does",
           "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
         },
-        "entity": {
+        "button_1_entity": {
           "name": "Entity",
           "description": "The script, automation, switch, light, boolean... the button acts on."
         },
-        "action": {
+        "button_1_action": {
           "name": "Custom action",
           "description": "Advanced: other actions run when the button is pressed, in addition to the above."
         },
-        "dismiss": {
+        "button_1_dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        },
+        "button_2_label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "button_2_type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "button_2_entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
+        "button_2_action": {
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
+        },
+        "button_2_dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        },
+        "button_3_label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "button_3_type": {
+          "name": "What it does",
+          "description": "What pressing the button does. If you choose an entity without choosing this, it is guessed: a script is run, an automation is triggered, anything else is toggled."
+        },
+        "button_3_entity": {
+          "name": "Entity",
+          "description": "The script, automation, switch, light, boolean... the button acts on."
+        },
+        "button_3_action": {
+          "name": "Custom action",
+          "description": "Advanced: other actions run when the button is pressed, in addition to the above."
+        },
+        "button_3_dismiss": {
           "name": "Close on press",
           "description": "Whether pressing the button closes the notification."
         },

@@ -1,6 +1,6 @@
 send_toast:
   target:
-    entity:
+    button_{n}_entity:
       integration: shield_remote_center
       domain: media_player
   fields:
@@ -31,10 +31,10 @@ send_toast:
     button_1:
       collapsed: false
       fields:
-        label:
+        button_1_label:
           selector:
             text:
-        type:
+        button_1_type:
           selector:
             select:
               translation_key: button_type
@@ -46,7 +46,7 @@ send_toast:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_1_entity:
           selector:
             entity:
               filter:
@@ -60,20 +60,20 @@ send_toast:
                     - cover
                     - lock
                     - scene
-        action:
+        button_1_action:
           selector:
             action:
-        dismiss:
+        button_1_dismiss:
           default: true
           selector:
             boolean:
     button_2:
       collapsed: true
       fields:
-        label:
+        button_2_label:
           selector:
             text:
-        type:
+        button_2_type:
           selector:
             select:
               translation_key: button_type
@@ -85,7 +85,7 @@ send_toast:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_2_entity:
           selector:
             entity:
               filter:
@@ -99,20 +99,20 @@ send_toast:
                     - cover
                     - lock
                     - scene
-        action:
+        button_2_action:
           selector:
             action:
-        dismiss:
+        button_2_dismiss:
           default: true
           selector:
             boolean:
     button_3:
       collapsed: true
       fields:
-        label:
+        button_3_label:
           selector:
             text:
-        type:
+        button_3_type:
           selector:
             select:
               translation_key: button_type
@@ -124,7 +124,7 @@ send_toast:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_3_entity:
           selector:
             entity:
               filter:
@@ -138,10 +138,10 @@ send_toast:
                     - cover
                     - lock
                     - scene
-        action:
+        button_3_action:
           selector:
             action:
-        dismiss:
+        button_3_dismiss:
           default: true
           selector:
             boolean:
@@ -152,7 +152,7 @@ send_toast:
 
 send_banner:
   target:
-    entity:
+    button_{n}_entity:
       integration: shield_remote_center
       domain: media_player
   fields:
@@ -183,10 +183,10 @@ send_banner:
     button_1:
       collapsed: false
       fields:
-        label:
+        button_1_label:
           selector:
             text:
-        type:
+        button_1_type:
           selector:
             select:
               translation_key: button_type
@@ -198,7 +198,7 @@ send_banner:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_1_entity:
           selector:
             entity:
               filter:
@@ -212,20 +212,20 @@ send_banner:
                     - cover
                     - lock
                     - scene
-        action:
+        button_1_action:
           selector:
             action:
-        dismiss:
+        button_1_dismiss:
           default: true
           selector:
             boolean:
     button_2:
       collapsed: true
       fields:
-        label:
+        button_2_label:
           selector:
             text:
-        type:
+        button_2_type:
           selector:
             select:
               translation_key: button_type
@@ -237,7 +237,7 @@ send_banner:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_2_entity:
           selector:
             entity:
               filter:
@@ -251,20 +251,20 @@ send_banner:
                     - cover
                     - lock
                     - scene
-        action:
+        button_2_action:
           selector:
             action:
-        dismiss:
+        button_2_dismiss:
           default: true
           selector:
             boolean:
     button_3:
       collapsed: true
       fields:
-        label:
+        button_3_label:
           selector:
             text:
-        type:
+        button_3_type:
           selector:
             select:
               translation_key: button_type
@@ -276,7 +276,7 @@ send_banner:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_3_entity:
           selector:
             entity:
               filter:
@@ -290,10 +290,10 @@ send_banner:
                     - cover
                     - lock
                     - scene
-        action:
+        button_3_action:
           selector:
             action:
-        dismiss:
+        button_3_dismiss:
           default: true
           selector:
             boolean:
@@ -304,7 +304,7 @@ send_banner:
 
 send_popup:
   target:
-    entity:
+    button_{n}_entity:
       integration: shield_remote_center
       domain: media_player
   fields:
@@ -350,10 +350,10 @@ send_popup:
     button_1:
       collapsed: false
       fields:
-        label:
+        button_1_label:
           selector:
             text:
-        type:
+        button_1_type:
           selector:
             select:
               translation_key: button_type
@@ -365,7 +365,7 @@ send_popup:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_1_entity:
           selector:
             entity:
               filter:
@@ -379,20 +379,20 @@ send_popup:
                     - cover
                     - lock
                     - scene
-        action:
+        button_1_action:
           selector:
             action:
-        dismiss:
+        button_1_dismiss:
           default: true
           selector:
             boolean:
     button_2:
       collapsed: true
       fields:
-        label:
+        button_2_label:
           selector:
             text:
-        type:
+        button_2_type:
           selector:
             select:
               translation_key: button_type
@@ -404,7 +404,7 @@ send_popup:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_2_entity:
           selector:
             entity:
               filter:
@@ -418,20 +418,20 @@ send_popup:
                     - cover
                     - lock
                     - scene
-        action:
+        button_2_action:
           selector:
             action:
-        dismiss:
+        button_2_dismiss:
           default: true
           selector:
             boolean:
     button_3:
       collapsed: true
       fields:
-        label:
+        button_3_label:
           selector:
             text:
-        type:
+        button_3_type:
           selector:
             select:
               translation_key: button_type
@@ -443,7 +443,7 @@ send_popup:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_3_entity:
           selector:
             entity:
               filter:
@@ -457,10 +457,10 @@ send_popup:
                     - cover
                     - lock
                     - scene
-        action:
+        button_3_action:
           selector:
             action:
-        dismiss:
+        button_3_dismiss:
           default: true
           selector:
             boolean:
@@ -471,7 +471,7 @@ send_popup:
 
 send_camera:
   target:
-    entity:
+    button_{n}_entity:
       integration: shield_remote_center
       domain: media_player
   fields:
@@ -518,10 +518,10 @@ send_camera:
     button_1:
       collapsed: false
       fields:
-        label:
+        button_1_label:
           selector:
             text:
-        type:
+        button_1_type:
           selector:
             select:
               translation_key: button_type
@@ -533,7 +533,7 @@ send_camera:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_1_entity:
           selector:
             entity:
               filter:
@@ -547,20 +547,20 @@ send_camera:
                     - cover
                     - lock
                     - scene
-        action:
+        button_1_action:
           selector:
             action:
-        dismiss:
+        button_1_dismiss:
           default: true
           selector:
             boolean:
     button_2:
       collapsed: true
       fields:
-        label:
+        button_2_label:
           selector:
             text:
-        type:
+        button_2_type:
           selector:
             select:
               translation_key: button_type
@@ -572,7 +572,7 @@ send_camera:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_2_entity:
           selector:
             entity:
               filter:
@@ -586,20 +586,20 @@ send_camera:
                     - cover
                     - lock
                     - scene
-        action:
+        button_2_action:
           selector:
             action:
-        dismiss:
+        button_2_dismiss:
           default: true
           selector:
             boolean:
     button_3:
       collapsed: true
       fields:
-        label:
+        button_3_label:
           selector:
             text:
-        type:
+        button_3_type:
           selector:
             select:
               translation_key: button_type
@@ -611,7 +611,7 @@ send_camera:
                 - turn_off
                 - automation
                 - action
-        entity:
+        button_3_entity:
           selector:
             entity:
               filter:
@@ -625,10 +625,10 @@ send_camera:
                     - cover
                     - lock
                     - scene
-        action:
+        button_3_action:
           selector:
             action:
-        dismiss:
+        button_3_dismiss:
           default: true
           selector:
             boolean:
@@ -639,7 +639,7 @@ send_camera:
 
 dismiss:
   target:
-    entity:
+    button_{n}_entity:
       integration: shield_remote_center
       domain: media_player
   fields:

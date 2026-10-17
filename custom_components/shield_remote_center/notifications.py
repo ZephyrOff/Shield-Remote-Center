@@ -14,7 +14,7 @@ import voluptuous as vol
 from homeassistant.components.camera import async_get_image as async_get_camera_image
 from homeassistant.components.image import async_get_image as async_get_image_entity
 from homeassistant.core import Context, HomeAssistant, callback
-from homeassistant.exceptions import HomeAssistantError
+from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.script import Script
@@ -81,9 +81,10 @@ BUTTON_SCHEMA = vol.Schema(
 )
 
 
-# Simple form of the buttons: one section per button in the action editor, with a type of action to
-# choose and an entity, instead of writing the actions
-BUTTON_KEYS = ("button_1", "button_2", "button_3")
+# Simple form of the buttons: for each button, a label, a type of action to choose and an entity, instead of
+# writing the actions. The fields have unique names (button_1_label...): the sections of the action editor only
+# group them, the data is not nested.
+BUTTON_COUNT = 3
 
 # What the button does, besides closing the notification when "dismiss" is on
 TYPE_CLOSE = "close"
@@ -113,32 +114,19 @@ PRESET_SERVICES = {
 }
 
 
-def _validate_button_section(section: dict[str, Any]) -> dict[str, Any]:
-    """An entity is needed by the types of buttons which act on one."""
-    if not section.get("label"):
-        return section  # not displayed
-    button_type = section.get("type")
-    if button_type in PRESET_SERVICES and not section.get("entity"):
-        raise vol.Invalid(f"An entity is required for a button of type {button_type}")
-    return section
-
-
-BUTTON_SECTION_SCHEMA = vol.All(
-    vol.Schema(
-        {
-            # A button without label is not displayed
-            vol.Optional("label"): cv.string,
-            vol.Optional("type"): vol.In(BUTTON_TYPES),
-            vol.Optional("entity"): cv.entity_id,
-            # Custom actions, for what the types do not cover
-            vol.Optional("action"): cv.SCRIPT_SCHEMA,
-            vol.Optional("id"): cv.string,
-            vol.Optional("dismiss", default=True): cv.boolean,
-        }
-    ),
-    _validate_button_section,
-)
-
+def _simple_buttons_schema() -> dict[Any, Any]:
+    """The fields of the simple buttons: button_1_label, button_1_type, button_1_entity..."""
+    schema: dict[Any, Any] = {}
+    for number in range(1, BUTTON_COUNT + 1):
+        prefix = f"button_{number}_"
+        # A button without label is not displayed
+        schema[vol.Optional(prefix + "label")] = cv.string
+        schema[vol.Optional(prefix + "type")] = vol.In(BUTTON_TYPES)
+        schema[vol.Optional(prefix + "entity")] = cv.entity_id
+        # Custom actions, for what the types do not cover
+        schema[vol.Optional(prefix + "action")] = cv.SCRIPT_SCHEMA
+        schema[vol.Optional(prefix + "dismiss", default=True)] = cv.boolean
+    return schema
 
 def button_actions(button: dict[str, Any]) -> list[dict[str, Any]]:
     """The actions to run when a button is pressed: its type and its custom actions."""
@@ -165,6 +153,7 @@ def button_actions(button: dict[str, Any]) -> list[dict[str, Any]]:
         actions.extend(custom)
     return actions
 
+
 CLOSE_LABELS = {
     "fr": "Fermer",
     "de": "Schließen",
@@ -187,8 +176,7 @@ def _schema(kind: str) -> dict[Any, Any]:
         # Advanced form of the buttons, for YAML: a list of buttons
         vol.Optional(ATTR_BUTTONS, default=list): vol.All(cv.ensure_list, [BUTTON_SCHEMA]),
     }
-    for key in BUTTON_KEYS:
-        schema[vol.Optional(key)] = BUTTON_SECTION_SCHEMA
+    schema.update(_simple_buttons_schema())
     if kind in (KIND_POPUP, KIND_CAMERA):
         camera_key = (
             vol.Required(ATTR_CAMERA_ENTITY)
@@ -243,10 +231,20 @@ class _Active:
 def collect_buttons(kind: str, data: dict[str, Any], language: str) -> list[dict[str, Any]]:
     """Merge the 2 forms of buttons, and make sure a popup or a camera can be closed."""
     buttons: list[dict[str, Any]] = list(data.get(ATTR_BUTTONS, []))
-    for key in BUTTON_KEYS:
-        section = data.get(key)
-        if section and section.get("label"):
-            buttons.append(section)
+    for number in range(1, BUTTON_COUNT + 1):
+        prefix = f"button_{number}_"
+        label = data.get(prefix + "label")
+        if not label:
+            continue
+        button: dict[str, Any] = {"label": label, "dismiss": data.get(prefix + "dismiss", True)}
+        for name in ("type", "entity", "action"):
+            if (value := data.get(prefix + name)) is not None:
+                button[name] = value
+        if button.get("type") in PRESET_SERVICES and not button.get("entity"):
+            raise ServiceValidationError(
+                f"Button {number} needs an entity for the type {button['type']}"
+            )
+        buttons.append(button)
     # The same shape for both forms of buttons
     buttons = [{**button, "actions": button_actions(button)} for button in buttons]
     if len(buttons) > MAX_BUTTONS:

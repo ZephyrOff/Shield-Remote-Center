@@ -57,23 +57,63 @@
           "name": "Délai",
           "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
         },
-        "label": {
+        "button_1_label": {
           "name": "Libellé",
           "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
         },
-        "type": {
+        "button_1_type": {
           "name": "Ce qu'il fait",
           "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
         },
-        "entity": {
+        "button_1_entity": {
           "name": "Entité",
           "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
         },
-        "action": {
+        "button_1_action": {
           "name": "Action personnalisée",
           "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
         },
-        "dismiss": {
+        "button_1_dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "button_2_label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "button_2_type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "button_2_entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
+        "button_2_action": {
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
+        },
+        "button_2_dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "button_3_label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "button_3_type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "button_3_entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
+        "button_3_action": {
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
+        },
+        "button_3_dismiss": {
           "name": "Fermer à l'appui",
           "description": "Indique si l'appui sur le bouton ferme la notification."
         },
@@ -121,23 +161,63 @@
           "name": "Délai",
           "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
         },
-        "label": {
+        "button_1_label": {
           "name": "Libellé",
           "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
         },
-        "type": {
+        "button_1_type": {
           "name": "Ce qu'il fait",
           "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
         },
-        "entity": {
+        "button_1_entity": {
           "name": "Entité",
           "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
         },
-        "action": {
+        "button_1_action": {
           "name": "Action personnalisée",
           "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
         },
-        "dismiss": {
+        "button_1_dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "button_2_label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "button_2_type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "button_2_entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
+        "button_2_action": {
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
+        },
+        "button_2_dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "button_3_label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "button_3_type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "button_3_entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
+        "button_3_action": {
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
+        },
+        "button_3_dismiss": {
           "name": "Fermer à l'appui",
           "description": "Indique si l'appui sur le bouton ferme la notification."
         },
@@ -193,23 +273,63 @@
           "name": "Délai",
           "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
         },
-        "label": {
+        "button_1_label": {
           "name": "Libellé",
           "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
         },
-        "type": {
+        "button_1_type": {
           "name": "Ce qu'il fait",
           "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
         },
-        "entity": {
+        "button_1_entity": {
           "name": "Entité",
           "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
         },
-        "action": {
+        "button_1_action": {
           "name": "Action personnalisée",
           "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
         },
-        "dismiss": {
+        "button_1_dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "button_2_label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "button_2_type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "button_2_entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
+        "button_2_action": {
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
+        },
+        "button_2_dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "button_3_label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "button_3_type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "button_3_entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
+        "button_3_action": {
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
+        },
+        "button_3_dismiss": {
           "name": "Fermer à l'appui",
           "description": "Indique si l'appui sur le bouton ferme la notification."
         },
@@ -265,23 +385,63 @@
           "name": "Délai",
           "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
         },
-        "label": {
+        "button_1_label": {
           "name": "Libellé",
           "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
         },
-        "type": {
+        "button_1_type": {
           "name": "Ce qu'il fait",
           "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
         },
-        "entity": {
+        "button_1_entity": {
           "name": "Entité",
           "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
         },
-        "action": {
+        "button_1_action": {
           "name": "Action personnalisée",
           "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
         },
-        "dismiss": {
+        "button_1_dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "button_2_label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "button_2_type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "button_2_entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
+        "button_2_action": {
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
+        },
+        "button_2_dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        },
+        "button_3_label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "button_3_type": {
+          "name": "Ce qu'il fait",
+          "description": "Ce que fait l'appui sur le bouton. Si vous choisissez une entité sans choisir ceci, c'est deviné : un script est lancé, une automatisation est déclenchée, le reste est basculé."
+        },
+        "button_3_entity": {
+          "name": "Entité",
+          "description": "Le script, l'automatisation, l'interrupteur, la lumière, le booléen... sur lequel agit le bouton."
+        },
+        "button_3_action": {
+          "name": "Action personnalisée",
+          "description": "Avancé : autres actions lancées à l'appui sur le bouton, en plus de ce qui précède."
+        },
+        "button_3_dismiss": {
           "name": "Fermer à l'appui",
           "description": "Indique si l'appui sur le bouton ferme la notification."
         },
