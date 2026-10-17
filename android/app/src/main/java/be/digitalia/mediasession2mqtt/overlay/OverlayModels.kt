@@ -75,6 +75,10 @@ fun parseOverlayRequest(json: JSONObject): OverlayRequest? {
             )
         }
     }
+    // A popup or a camera must always offer a way to close it
+    if ((kind == OverlayKind.POPUP || kind == OverlayKind.CAMERA) && buttons.none { it.dismiss }) {
+        buttons += OverlayButton("close", json.optString("close_label").ifEmpty { "Close" }, dismiss = true)
+    }
     return OverlayRequest(
         notificationId = json.optInt("notification_id"),
         kind = kind,
@@ -88,5 +92,6 @@ fun parseOverlayRequest(json: JSONObject): OverlayRequest? {
     )
 }
 
-private const val MAX_BUTTONS = 4
+// 4 buttons plus the close button added to the popups and the cameras
+private const val MAX_BUTTONS = 5
 private const val MAX_TIMEOUT_SECONDS = 3600.0

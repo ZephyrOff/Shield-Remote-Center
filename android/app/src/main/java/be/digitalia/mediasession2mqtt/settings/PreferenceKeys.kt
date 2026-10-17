@@ -11,6 +11,7 @@ object PreferenceKeys {
     const val LOCAL_API_REGENERATE_TOKEN = "local_api_regenerate_token"
     const val OVERLAY_ENABLED = "overlay_enabled"
     const val OVERLAY_PERMISSION = "overlay_permission"
+    const val KEY_INTERCEPT = "key_intercept"
 
     const val PROTOCOL_VERSION = "protocol_version"
     const val HOSTNAME = "hostname"

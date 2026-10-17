@@ -36,7 +36,13 @@ Copy `custom_components/shield_remote_center` to your `config/custom_components/
    ```
    adb shell appops set be.digitalia.mediasession2mqtt SYSTEM_ALERT_WINDOW allow
    ```
-4. In Home Assistant: *Settings → Devices & services → Add integration → SRC*, then enter the Shield IP address, the port (default `8765`) and the token.
+4. To operate the buttons of the notifications with the remote control, enable the "Remote control capture" accessibility service of the app (its settings entry opens the system screen when it exists; otherwise use ADB). If you already use other accessibility services, append the new one to the list with a `:` separator.
+   ```
+   adb shell settings put secure enabled_accessibility_services be.digitalia.mediasession2mqtt/be.digitalia.mediasession2mqtt.service.KeyInterceptService
+   adb shell settings put secure accessibility_enabled 1
+   ```
+   Android disables the service when the app is reinstalled: enable it again after an update.
+5. In Home Assistant: *Settings → Devices & services → Add integration → SRC*, then enter the Shield IP address, the port (default `8765`) and the token.
 
 The traffic is an unencrypted WebSocket on the local network: do not expose the port outside a trusted network.
 
@@ -61,13 +67,15 @@ Fields of the four `send_*` actions:
 | `icon` | Any Material Design icon, e.g. `mdi:door-open` |
 | `color` | Accent color: `[r, g, b]`, `#RRGGBB` or a color name |
 | `timeout` | Seconds before it disappears. `0` keeps it until a button or the Back key is pressed. Defaults: toast 8, banner 15, popup 30, camera 30 |
-| `buttons` | Up to 4 buttons (see below) |
+| `button_1` … `button_4` | Up to 4 buttons, one collapsible section each in the action editor (see below) |
 | `camera_entity` | `camera.*` or `image.*` entity shown live (required for `send_camera`, optional for `send_popup`) |
 | `refresh_rate` | Seconds between two pictures of the live view (0.5 to 10, default 1) |
 
-Each button: `label` (required), `action` (optional list of actions to run when pressed, e.g. a script), `id` (optional, reported in the event, defaults to the position) and `dismiss` (default `true`; set `false` to keep the notification open, e.g. to open a gate while still watching the camera).
+Each button section has a `label` (a button without label is not displayed), an `action` (the actions to run when the button is pressed, e.g. a script, chosen with the usual action editor) and `dismiss` (default `true`; set `false` to keep the notification open, e.g. to open a gate while still watching the camera). In YAML you can also add an `id` (reported in the event, defaults to the position).
 
-A new notification replaces the previous one of the same kind.
+A **popup or a camera always has a button which closes it**: if none of your buttons closes it, a "Close" button is added at the end.
+
+A new notification replaces the previous one of the same kind. YAML users can alternatively give the buttons as a `buttons:` list of the same objects.
 
 ### Examples
 
@@ -83,11 +91,12 @@ data:
   icon: mdi:bell-ring
   camera_entity: camera.gate
   timeout: 30
-  buttons:
-    - label: Open the gate
-      action:
-        - action: script.open_gate
-    - label: Ignore
+  button_1:
+    label: Open the gate
+    action:
+      - action: script.open_gate
+  button_2:
+    label: Ignore
 ```
 
 Camera view whose button keeps the view open:
@@ -100,12 +109,12 @@ data:
   primary: Entrance
   secondary: Motion detected
   camera_entity: camera.entrance
-  buttons:
-    - label: Open the gate
-      dismiss: false
-      action:
-        - action: script.open_gate
-    - label: Close
+  button_1:
+    label: Open the gate
+    dismiss: false
+    action:
+      - action: script.open_gate
+  # a "Close" button is added automatically
 ```
 
 Critical banner that stays until acknowledged:
@@ -139,7 +148,11 @@ Event data: `entity_id`, `type` (`button_pressed` or `dismissed`), `kind`, `noti
 
 ## Using the remote control
 
-Notifications without buttons never take the focus nor the touches. A notification **with buttons takes the focus** so that it can be operated with the D-pad (OK presses the highlighted button) and closed with Back: the remote does not control the playing app while it is displayed.
+Notifications without buttons never take the focus nor the touches.
+
+While a notification with buttons is displayed, the arrows select a button, OK presses it and Back closes the notification; the other keys (volume, Home, media keys) keep working. This relies on the "Remote control capture" accessibility service (see Setup), which receives the keys before the playing app and only consumes them while such a notification is displayed. Without it, the notification tries to take the focus of the screen instead, which does not work on every device.
+
+To check that the service receives the keys, with a debug build of the app: `adb logcat -s KeyInterceptService`, then press keys on the remote.
 
 ## Protocol
 

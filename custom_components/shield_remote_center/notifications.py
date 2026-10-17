@@ -81,6 +81,28 @@ BUTTON_SCHEMA = vol.Schema(
 )
 
 
+# Simple form of the buttons: one collapsible section per button in the action editor
+BUTTON_KEYS = ("button_1", "button_2", "button_3", "button_4")
+BUTTON_SECTION_SCHEMA = vol.Schema(
+    {
+        # A button without label is not displayed
+        vol.Optional("label"): cv.string,
+        vol.Optional("id"): cv.string,
+        vol.Optional("action"): cv.SCRIPT_SCHEMA,
+        vol.Optional("dismiss", default=True): cv.boolean,
+    }
+)
+
+CLOSE_LABELS = {
+    "fr": "Fermer",
+    "de": "Schließen",
+    "es": "Cerrar",
+    "it": "Chiudi",
+    "nl": "Sluiten",
+    "pt": "Fechar",
+}
+
+
 def _schema(kind: str) -> dict[Any, Any]:
     schema: dict[Any, Any] = {
         vol.Required(ATTR_PRIMARY): cv.string,
@@ -90,10 +112,11 @@ def _schema(kind: str) -> dict[Any, Any]:
         vol.Optional(ATTR_TIMEOUT, default=DEFAULT_TIMEOUTS[kind]): vol.All(
             vol.Coerce(float), vol.Range(min=0, max=3600)
         ),
-        vol.Optional(ATTR_BUTTONS, default=list): vol.All(
-            cv.ensure_list, [BUTTON_SCHEMA], vol.Length(max=MAX_BUTTONS)
-        ),
+        # Advanced form of the buttons, for YAML: a list of buttons
+        vol.Optional(ATTR_BUTTONS, default=list): vol.All(cv.ensure_list, [BUTTON_SCHEMA]),
     }
+    for key in BUTTON_KEYS:
+        schema[vol.Optional(key)] = BUTTON_SECTION_SCHEMA
     if kind in (KIND_POPUP, KIND_CAMERA):
         camera_key = (
             vol.Required(ATTR_CAMERA_ENTITY)
@@ -145,6 +168,28 @@ class _Active:
             self.stream = None
 
 
+def collect_buttons(kind: str, data: dict[str, Any], language: str) -> list[dict[str, Any]]:
+    """Merge the 2 forms of buttons, and make sure a popup or a camera can be closed."""
+    buttons: list[dict[str, Any]] = list(data.get(ATTR_BUTTONS, []))
+    for key in BUTTON_KEYS:
+        section = data.get(key)
+        if section and section.get("label"):
+            buttons.append(section)
+    if len(buttons) > MAX_BUTTONS:
+        raise HomeAssistantError(f"At most {MAX_BUTTONS} buttons are supported")
+    if kind in (KIND_POPUP, KIND_CAMERA) and not any(
+        button.get("dismiss", True) for button in buttons
+    ):
+        buttons.append(
+            {
+                "label": CLOSE_LABELS.get(language.split("-")[0].lower(), "Close"),
+                "id": "close",
+                "dismiss": True,
+            }
+        )
+    return buttons
+
+
 class NotificationManager:
     """Sends notifications to a Shield and handles the answers of the app."""
 
@@ -163,11 +208,17 @@ class NotificationManager:
         self._next_id += 1
         active = _Active(self._next_id, kind, context)
         buttons = []
-        for index, button in enumerate(data[ATTR_BUTTONS]):
-            active.button_ids.append(button.get("id", str(index)))
+        for index, button in enumerate(
+            collect_buttons(kind, data, self._hass.config.language)
+        ):
+            active.button_ids.append(button.get("id") or str(index))
             active.button_labels.append(button["label"])
             buttons.append(
-                {"id": str(index), "label": button["label"], "dismiss": button["dismiss"]}
+                {
+                    "id": str(index),
+                    "label": button["label"],
+                    "dismiss": button.get("dismiss", True),
+                }
             )
             if actions := button.get("action"):
                 active.scripts[index] = Script(

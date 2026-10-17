@@ -18,7 +18,6 @@ send_toast:
       selector:
         icon:
     color:
-      example: "[10, 132, 255]"
       selector:
         color_rgb:
     timeout:
@@ -29,10 +28,58 @@ send_toast:
           max: 3600
           unit_of_measurement: s
           mode: box
-    buttons:
-      example: '[{"label": "OK"}, {"label": "Remind me", "action": [{"action": "script.remind_laundry"}]}]'
-      selector:
-        object:
+    button_1:
+      collapsed: false
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_2:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_3:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_4:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
 
 send_banner:
   target:
@@ -54,7 +101,6 @@ send_banner:
       selector:
         icon:
     color:
-      example: "[255, 214, 10]"
       selector:
         color_rgb:
     timeout:
@@ -65,10 +111,58 @@ send_banner:
           max: 3600
           unit_of_measurement: s
           mode: box
-    buttons:
-      example: '[{"label": "Show camera", "action": [{"action": "script.show_kitchen_camera"}]}]'
-      selector:
-        object:
+    button_1:
+      collapsed: false
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_2:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_3:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_4:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
 
 send_popup:
   target:
@@ -85,26 +179,6 @@ send_popup:
       example: "Open it from the TV?"
       selector:
         text:
-    icon:
-      example: "mdi:bell-ring"
-      selector:
-        icon:
-    color:
-      example: "[10, 132, 255]"
-      selector:
-        color_rgb:
-    timeout:
-      default: 30
-      selector:
-        number:
-          min: 0
-          max: 3600
-          unit_of_measurement: s
-          mode: box
-    buttons:
-      example: '[{"label": "Open the gate", "action": [{"action": "script.open_gate"}]}, {"label": "Ignore"}]'
-      selector:
-        object:
     camera_entity:
       selector:
         entity:
@@ -120,6 +194,73 @@ send_popup:
           step: 0.5
           unit_of_measurement: s
           mode: box
+    icon:
+      example: "mdi:bell-ring"
+      selector:
+        icon:
+    color:
+      selector:
+        color_rgb:
+    timeout:
+      default: 30
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: s
+          mode: box
+    button_1:
+      collapsed: false
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_2:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_3:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_4:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
 
 send_camera:
   target:
@@ -136,26 +277,6 @@ send_camera:
       example: "Motion detected"
       selector:
         text:
-    icon:
-      example: "mdi:cctv"
-      selector:
-        icon:
-    color:
-      example: "[48, 209, 88]"
-      selector:
-        color_rgb:
-    timeout:
-      default: 30
-      selector:
-        number:
-          min: 0
-          max: 3600
-          unit_of_measurement: s
-          mode: box
-    buttons:
-      example: '[{"label": "Open the gate", "action": [{"action": "script.open_gate"}], "dismiss": false}, {"label": "Close"}]'
-      selector:
-        object:
     camera_entity:
       required: true
       selector:
@@ -172,6 +293,73 @@ send_camera:
           step: 0.5
           unit_of_measurement: s
           mode: box
+    icon:
+      example: "mdi:cctv"
+      selector:
+        icon:
+    color:
+      selector:
+        color_rgb:
+    timeout:
+      default: 30
+      selector:
+        number:
+          min: 0
+          max: 3600
+          unit_of_measurement: s
+          mode: box
+    button_1:
+      collapsed: false
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_2:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_3:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
+    button_4:
+      collapsed: true
+      fields:
+        label:
+          selector:
+            text:
+        action:
+          selector:
+            action:
+        dismiss:
+          default: true
+          selector:
+            boolean:
 
 dismiss:
   target:

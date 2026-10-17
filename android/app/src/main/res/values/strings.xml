@@ -21,6 +21,12 @@
     <string name="overlay_permission_granted">Permission granted</string>
     <string name="overlay_permission_missing">Permission missing: click here, or grant it with ADB</string>
     <string name="overlay_permission_screen_not_found">Settings screen not found.\nGrant it with ADB:\nadb shell appops set be.digitalia.mediasession2mqtt SYSTEM_ALERT_WINDOW allow</string>
+    <string name="settings_key_intercept">Remote control capture</string>
+    <string name="key_intercept_active">Active: the remote control operates the buttons of the notifications</string>
+    <string name="key_intercept_inactive">Inactive: click here to enable the accessibility service, or enable it with ADB</string>
+    <string name="key_intercept_screen_not_found">Accessibility settings screen not found.\nEnable the service with ADB:\nadb shell settings put secure enabled_accessibility_services be.digitalia.mediasession2mqtt/be.digitalia.mediasession2mqtt.service.KeyInterceptService\nadb shell settings put secure accessibility_enabled 1</string>
+    <string name="key_intercept_label">Remote control capture</string>
+    <string name="key_intercept_description">Lets the remote control operate the buttons of the notifications displayed by Home Assistant. It only reads the remote control keys while such a notification is displayed.</string>
     <string name="local_api_token_regenerated">New pairing token generated. Update it in Home Assistant.</string>
 
     <string name="settings_server_connection">MQTT server connection</string>

@@ -35,6 +35,20 @@
             </intent-filter>
         </service>
 
+        <service
+            android:name=".service.KeyInterceptService"
+            android:exported="false"
+            android:label="@string/key_intercept_label"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/key_intercept_service" />
+        </service>
+
         <receiver
             android:name=".service.BootReceiver"
             android:exported="false">

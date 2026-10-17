@@ -9,9 +9,11 @@ import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.ImageView
+import be.digitalia.mediasession2mqtt.service.KeyInterceptService
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
@@ -36,12 +38,19 @@ class OverlayManager(private val context: Context) {
         val request: OverlayRequest,
         val root: View,
         val image: ImageView?,
-        val timeoutRunnable: Runnable?
-    )
+        val timeoutRunnable: Runnable?,
+        val buttons: List<View>,
+        /** Increasing: the overlay shown last receives the keys. */
+        val order: Long
+    ) {
+        var selected = 0
+    }
 
     private val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val handler = Handler(Looper.getMainLooper())
     private val active = EnumMap<OverlayKind, ActiveOverlay>(OverlayKind::class.java)
+
+    private var shownCount = 0L
 
     private val decoder = Executors.newSingleThreadExecutor()
     private val isDecoding = AtomicBoolean(false)
@@ -83,9 +92,49 @@ class OverlayManager(private val context: Context) {
         } else {
             null
         }
-        active[request.kind] = ActiveOverlay(request, built.root, built.image, timeoutRunnable)
+        val overlay = ActiveOverlay(request, built.root, built.image, timeoutRunnable, built.buttons, ++shownCount)
+        active[request.kind] = overlay
+        updateSelection(overlay)
         built.firstFocus?.post { built.firstFocus.requestFocus() }
         return null
+    }
+
+    /**
+     * Handle a key of the remote control while an overlay with buttons is displayed: the arrows select a
+     * button, OK presses it and Back closes the overlay. Called by the key interception service, which
+     * receives the keys before the application in the foreground.
+     *
+     * @return true if the key was consumed
+     */
+    fun handleKeyEvent(event: KeyEvent): Boolean {
+        val overlay = active.values.filter { it.buttons.isNotEmpty() }.maxByOrNull { it.order } ?: return false
+        val isDown = event.action == KeyEvent.ACTION_DOWN
+        when (event.keyCode) {
+            KeyEvent.KEYCODE_DPAD_LEFT, KeyEvent.KEYCODE_DPAD_UP -> if (isDown) moveSelection(overlay, -1)
+            KeyEvent.KEYCODE_DPAD_RIGHT, KeyEvent.KEYCODE_DPAD_DOWN -> if (isDown) moveSelection(overlay, 1)
+            KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_ENTER, KeyEvent.KEYCODE_NUMPAD_ENTER ->
+                if (event.action == KeyEvent.ACTION_UP) {
+                    overlay.request.buttons.getOrNull(overlay.selected)?.let { onButtonPressed(overlay.request, it) }
+                }
+
+            KeyEvent.KEYCODE_BACK ->
+                if (event.action == KeyEvent.ACTION_UP) {
+                    dismiss(overlay.request.kind, "back", overlay.request.notificationId)
+                }
+
+            else -> return false
+        }
+        return true
+    }
+
+    private fun moveSelection(overlay: ActiveOverlay, step: Int) {
+        val count = overlay.buttons.size
+        overlay.selected = (overlay.selected + step + count) % count
+        updateSelection(overlay)
+    }
+
+    private fun updateSelection(overlay: ActiveOverlay) {
+        overlay.buttons.forEachIndexed { index, view -> view.isSelected = index == overlay.selected }
     }
 
     /**
@@ -159,10 +208,14 @@ class OverlayManager(private val context: Context) {
             WindowManager.LayoutParams.TYPE_PHONE
         }
         var flags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-        flags = flags or if (request.buttons.isEmpty()) {
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
-        } else {
-            WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+        flags = flags or when {
+            request.buttons.isEmpty() ->
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+            // The keys are received through the key interception service: don't take the focus
+            // away from the application which is playing
+            KeyInterceptService.isConnected -> WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+            // Otherwise rely on the focus of the window
+            else -> WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
         }
         val scale = context.resources.displayMetrics.widthPixels / REFERENCE_WIDTH
         val params = WindowManager.LayoutParams(

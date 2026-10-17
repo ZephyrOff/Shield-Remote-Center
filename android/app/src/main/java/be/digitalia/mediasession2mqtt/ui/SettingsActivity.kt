@@ -19,6 +19,7 @@ import be.digitalia.mediasession2mqtt.mediasession.CurrentMediaControllerDetecto
 import be.digitalia.mediasession2mqtt.mqtt.MQTTPublishClient
 import be.digitalia.mediasession2mqtt.mqtt.testConnection
 import be.digitalia.mediasession2mqtt.overlay.OverlayManager
+import be.digitalia.mediasession2mqtt.service.KeyInterceptService
 import be.digitalia.mediasession2mqtt.settings.PreferenceKeys
 import be.digitalia.mediasession2mqtt.settings.SettingsProvider
 import dev.zacsweers.metro.Inject
@@ -98,6 +99,7 @@ class SettingsActivity : PreferenceActivity() {
         setupEditTextPreferenceSimpleSummaryProvider(PreferenceKeys.LOCAL_API_PORT, clearTextFilter)
         setupLocalApiToken()
         setupOverlayPermission()
+        setupKeyIntercept()
 
         setupConnectionTest()
         setupNotificationListenerLink()
@@ -136,6 +138,23 @@ class SettingsActivity : PreferenceActivity() {
         findPreference(PreferenceKeys.LOCAL_API_REGENERATE_TOKEN)?.setOnPreferenceClickListener {
             tokenPreference.summary = settingsProvider.regenerateLocalApiToken()
             Toast.makeText(this, R.string.local_api_token_regenerated, Toast.LENGTH_LONG).show()
+            true
+        }
+    }
+
+    private fun refreshKeyInterceptSummary() {
+        findPreference(PreferenceKeys.KEY_INTERCEPT)?.setSummary(
+            if (KeyInterceptService.isConnected) R.string.key_intercept_active else R.string.key_intercept_inactive
+        )
+    }
+
+    private fun setupKeyIntercept() {
+        findPreference(PreferenceKeys.KEY_INTERCEPT)?.setOnPreferenceClickListener {
+            try {
+                startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(this, R.string.key_intercept_screen_not_found, Toast.LENGTH_LONG).show()
+            }
             true
         }
     }
@@ -217,6 +236,7 @@ class SettingsActivity : PreferenceActivity() {
 
         setupStatus(coroutineScope)
         refreshOverlayPermissionSummary()
+        refreshKeyInterceptSummary()
     }
 
     @Suppress("OVERRIDE_DEPRECATION")

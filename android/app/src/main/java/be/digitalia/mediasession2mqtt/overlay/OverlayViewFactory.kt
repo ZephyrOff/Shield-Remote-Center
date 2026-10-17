@@ -20,7 +20,7 @@ import android.widget.TextView
 import kotlin.math.min
 import kotlin.math.roundToInt
 
-internal class BuiltOverlay(val root: View, val image: ImageView?, val firstFocus: View?)
+internal class BuiltOverlay(val root: View, val image: ImageView?, val firstFocus: View?, val buttons: List<View>)
 
 /** Root view which turns the Back key into a dismissal. */
 private class OverlayRoot(context: Context, private val onBack: () -> Unit) : FrameLayout(context) {
@@ -75,7 +75,7 @@ internal class OverlayViewFactory(private val context: Context) {
         val buttons = buttonRow(request, onButton, 19, u(12), u(20), 0xFF3A3A3C.toInt(), Color.WHITE, accent, Color.WHITE, Color.WHITE, weighted = false)
         buttons.row?.let { row.addView(it) }
         root.addView(row)
-        return BuiltOverlay(root, null, buttons.first)
+        return BuiltOverlay(root, null, buttons.first, buttons.views)
     }
 
     private fun buildBanner(request: OverlayRequest, onButton: (OverlayButton) -> Unit, onBack: () -> Unit): BuiltOverlay {
@@ -103,7 +103,7 @@ internal class OverlayViewFactory(private val context: Context) {
         )
         buttons.row?.let { row.addView(it) }
         root.addView(row)
-        return BuiltOverlay(root, null, buttons.first)
+        return BuiltOverlay(root, null, buttons.first, buttons.views)
     }
 
     private fun buildPopup(request: OverlayRequest, onButton: (OverlayButton) -> Unit, onBack: () -> Unit): BuiltOverlay {
@@ -146,7 +146,7 @@ internal class OverlayViewFactory(private val context: Context) {
             sheet,
             FrameLayout.LayoutParams(min(u(1040), screenWidth), ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
         )
-        return BuiltOverlay(root, image, buttons.first)
+        return BuiltOverlay(root, image, buttons.first, buttons.views)
     }
 
     private fun buildCamera(request: OverlayRequest, onButton: (OverlayButton) -> Unit, onBack: () -> Unit): BuiltOverlay {
@@ -200,10 +200,10 @@ internal class OverlayViewFactory(private val context: Context) {
             })
         }
         root.addView(card, FrameLayout.LayoutParams(u(440), u(248)))
-        return BuiltOverlay(root, image, buttons.first)
+        return BuiltOverlay(root, image, buttons.first, buttons.views)
     }
 
-    private class ButtonRow(val row: LinearLayout?, val first: View?)
+    private class ButtonRow(val row: LinearLayout?, val first: View?, val views: List<View>)
 
     private fun buttonRow(
         request: OverlayRequest,
@@ -219,7 +219,7 @@ internal class OverlayViewFactory(private val context: Context) {
         weighted: Boolean
     ): ButtonRow {
         if (request.buttons.isEmpty()) {
-            return ButtonRow(null, null)
+            return ButtonRow(null, null, emptyList())
         }
         val row = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
@@ -234,8 +234,13 @@ internal class OverlayViewFactory(private val context: Context) {
                 setTextSize(TypedValue.COMPLEX_UNIT_PX, u(textSize).toFloat())
                 setTextColor(
                     ColorStateList(
-                        arrayOf(intArrayOf(android.R.attr.state_focused), intArrayOf(android.R.attr.state_pressed), intArrayOf()),
-                        intArrayOf(focusFg, focusFg, normalFg)
+                        arrayOf(
+                            intArrayOf(android.R.attr.state_focused),
+                            intArrayOf(android.R.attr.state_pressed),
+                            intArrayOf(android.R.attr.state_selected),
+                            intArrayOf()
+                        ),
+                        intArrayOf(focusFg, focusFg, focusFg, normalFg)
                     )
                 )
                 setPadding(padH, padV, padH, padV)
@@ -247,6 +252,8 @@ internal class OverlayViewFactory(private val context: Context) {
                     }
                     addState(intArrayOf(android.R.attr.state_focused), focused)
                     addState(intArrayOf(android.R.attr.state_pressed), focused)
+                    // Selection driven by the key interception service, independent from the window focus
+                    addState(intArrayOf(android.R.attr.state_selected), focused)
                     addState(intArrayOf(), roundedRect(normalBg, PILL_RADIUS))
                 }
                 isFocusable = true
@@ -263,7 +270,7 @@ internal class OverlayViewFactory(private val context: Context) {
             }
             row.addView(view, params)
         }
-        return ButtonRow(row, row.getChildAt(0))
+        return ButtonRow(row, row.getChildAt(0), List(row.childCount) { row.getChildAt(it) })
     }
 
     private fun textColumn(request: OverlayRequest, primarySize: Int, secondarySize: Int, primaryColor: Int, secondaryColor: Int): LinearLayout {

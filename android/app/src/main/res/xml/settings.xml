@@ -51,6 +51,10 @@
             android:dependency="overlay_enabled"
             android:key="overlay_permission"
             android:title="@string/settings_overlay_permission" />
+        <Preference
+            android:dependency="overlay_enabled"
+            android:key="key_intercept"
+            android:title="@string/settings_key_intercept" />
     </PreferenceCategory>
 
     <PreferenceCategory

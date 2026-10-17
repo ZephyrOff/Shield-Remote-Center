@@ -38,15 +38,41 @@
         },
         "color": {
           "name": "Color",
-          "description": "Accent color of the notification: RGB list, #RRGGBB or color name."
+          "description": "Accent color of the notification."
         },
         "timeout": {
           "name": "Timeout",
           "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
         },
-        "buttons": {
-          "name": "Buttons",
-          "description": "Up to 4 buttons. Each one has a label, an optional id (reported in the event), optional actions to run when pressed (e.g. a script) and dismiss (default true)."
+        "label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "action": {
+          "name": "Action",
+          "description": "Actions run when the button is pressed, e.g. a script."
+        },
+        "dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        }
+      },
+      "sections": {
+        "button_1": {
+          "name": "Button 1",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_2": {
+          "name": "Button 2",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_3": {
+          "name": "Button 3",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_4": {
+          "name": "Button 4",
+          "description": "Optional button. The remote control selects it and OK presses it."
         }
       }
     },
@@ -68,21 +94,47 @@
         },
         "color": {
           "name": "Color",
-          "description": "Accent color of the notification: RGB list, #RRGGBB or color name."
+          "description": "Accent color of the notification."
         },
         "timeout": {
           "name": "Timeout",
           "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
         },
-        "buttons": {
-          "name": "Buttons",
-          "description": "Up to 4 buttons. Each one has a label, an optional id (reported in the event), optional actions to run when pressed (e.g. a script) and dismiss (default true)."
+        "label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "action": {
+          "name": "Action",
+          "description": "Actions run when the button is pressed, e.g. a script."
+        },
+        "dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        }
+      },
+      "sections": {
+        "button_1": {
+          "name": "Button 1",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_2": {
+          "name": "Button 2",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_3": {
+          "name": "Button 3",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_4": {
+          "name": "Button 4",
+          "description": "Optional button. The remote control selects it and OK presses it."
         }
       }
     },
     "send_popup": {
       "name": "Send a popup",
-      "description": "Display a popup at the bottom of the Shield screen, optionally with a live camera or image.",
+      "description": "Display a popup at the bottom of the Shield screen, optionally with a live camera or image. A close button is added if none closes it.",
       "fields": {
         "primary": {
           "name": "Primary text",
@@ -92,22 +144,6 @@
           "name": "Secondary text",
           "description": "Second line of the notification."
         },
-        "icon": {
-          "name": "Icon",
-          "description": "Material Design icon, e.g. mdi:door-open."
-        },
-        "color": {
-          "name": "Color",
-          "description": "Accent color of the notification: RGB list, #RRGGBB or color name."
-        },
-        "timeout": {
-          "name": "Timeout",
-          "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
-        },
-        "buttons": {
-          "name": "Buttons",
-          "description": "Up to 4 buttons. Each one has a label, an optional id (reported in the event), optional actions to run when pressed (e.g. a script) and dismiss (default true)."
-        },
         "camera_entity": {
           "name": "Camera",
           "description": "Camera or image entity displayed live."
@@ -115,12 +151,54 @@
         "refresh_rate": {
           "name": "Refresh interval",
           "description": "Seconds between two pictures of the live view."
+        },
+        "icon": {
+          "name": "Icon",
+          "description": "Material Design icon, e.g. mdi:door-open."
+        },
+        "color": {
+          "name": "Color",
+          "description": "Accent color of the notification."
+        },
+        "timeout": {
+          "name": "Timeout",
+          "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
+        },
+        "label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "action": {
+          "name": "Action",
+          "description": "Actions run when the button is pressed, e.g. a script."
+        },
+        "dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        }
+      },
+      "sections": {
+        "button_1": {
+          "name": "Button 1",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_2": {
+          "name": "Button 2",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_3": {
+          "name": "Button 3",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_4": {
+          "name": "Button 4",
+          "description": "Optional button. The remote control selects it and OK presses it."
         }
       }
     },
     "send_camera": {
       "name": "Send a camera",
-      "description": "Display a live camera view over the video being played.",
+      "description": "Display a live camera view over the video being played. A close button is added if none closes it.",
       "fields": {
         "primary": {
           "name": "Primary text",
@@ -130,22 +208,6 @@
           "name": "Secondary text",
           "description": "Second line of the notification."
         },
-        "icon": {
-          "name": "Icon",
-          "description": "Material Design icon, e.g. mdi:door-open."
-        },
-        "color": {
-          "name": "Color",
-          "description": "Accent color of the notification: RGB list, #RRGGBB or color name."
-        },
-        "timeout": {
-          "name": "Timeout",
-          "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
-        },
-        "buttons": {
-          "name": "Buttons",
-          "description": "Up to 4 buttons. Each one has a label, an optional id (reported in the event), optional actions to run when pressed (e.g. a script) and dismiss (default true)."
-        },
         "camera_entity": {
           "name": "Camera",
           "description": "Camera or image entity displayed live."
@@ -153,6 +215,48 @@
         "refresh_rate": {
           "name": "Refresh interval",
           "description": "Seconds between two pictures of the live view."
+        },
+        "icon": {
+          "name": "Icon",
+          "description": "Material Design icon, e.g. mdi:door-open."
+        },
+        "color": {
+          "name": "Color",
+          "description": "Accent color of the notification."
+        },
+        "timeout": {
+          "name": "Timeout",
+          "description": "Seconds before the notification disappears. 0 keeps it until a button or the Back key is pressed."
+        },
+        "label": {
+          "name": "Label",
+          "description": "Text of the button. Leave empty to not display this button."
+        },
+        "action": {
+          "name": "Action",
+          "description": "Actions run when the button is pressed, e.g. a script."
+        },
+        "dismiss": {
+          "name": "Close on press",
+          "description": "Whether pressing the button closes the notification."
+        }
+      },
+      "sections": {
+        "button_1": {
+          "name": "Button 1",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_2": {
+          "name": "Button 2",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_3": {
+          "name": "Button 3",
+          "description": "Optional button. The remote control selects it and OK presses it."
+        },
+        "button_4": {
+          "name": "Button 4",
+          "description": "Optional button. The remote control selects it and OK presses it."
         }
       }
     },

@@ -38,15 +38,41 @@
         },
         "color": {
           "name": "Couleur",
-          "description": "Couleur d'accent de la notification : liste RGB, #RRGGBB ou nom de couleur."
+          "description": "Couleur d'accent de la notification."
         },
         "timeout": {
           "name": "Délai",
           "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
         },
-        "buttons": {
-          "name": "Boutons",
-          "description": "Jusqu'à 4 boutons. Chacun a un libellé, un id optionnel (renvoyé dans l'évènement), des actions optionnelles à l'appui (par exemple un script) et dismiss (true par défaut)."
+        "label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "action": {
+          "name": "Action",
+          "description": "Actions lancées à l'appui sur le bouton, par exemple un script."
+        },
+        "dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        }
+      },
+      "sections": {
+        "button_1": {
+          "name": "Bouton 1",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_2": {
+          "name": "Bouton 2",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_3": {
+          "name": "Bouton 3",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_4": {
+          "name": "Bouton 4",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
         }
       }
     },
@@ -68,21 +94,47 @@
         },
         "color": {
           "name": "Couleur",
-          "description": "Couleur d'accent de la notification : liste RGB, #RRGGBB ou nom de couleur."
+          "description": "Couleur d'accent de la notification."
         },
         "timeout": {
           "name": "Délai",
           "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
         },
-        "buttons": {
-          "name": "Boutons",
-          "description": "Jusqu'à 4 boutons. Chacun a un libellé, un id optionnel (renvoyé dans l'évènement), des actions optionnelles à l'appui (par exemple un script) et dismiss (true par défaut)."
+        "label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "action": {
+          "name": "Action",
+          "description": "Actions lancées à l'appui sur le bouton, par exemple un script."
+        },
+        "dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        }
+      },
+      "sections": {
+        "button_1": {
+          "name": "Bouton 1",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_2": {
+          "name": "Bouton 2",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_3": {
+          "name": "Bouton 3",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_4": {
+          "name": "Bouton 4",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
         }
       }
     },
     "send_popup": {
       "name": "Envoyer un popup",
-      "description": "Affiche un popup en bas de l'écran de la Shield, avec éventuellement une caméra ou une image en direct.",
+      "description": "Affiche un popup en bas de l'écran de la Shield, avec éventuellement une caméra ou une image en direct. Un bouton de fermeture est ajouté si aucun ne le ferme.",
       "fields": {
         "primary": {
           "name": "Texte principal",
@@ -92,22 +144,6 @@
           "name": "Texte secondaire",
           "description": "Deuxième ligne de la notification."
         },
-        "icon": {
-          "name": "Icône",
-          "description": "Icône Material Design, par exemple mdi:door-open."
-        },
-        "color": {
-          "name": "Couleur",
-          "description": "Couleur d'accent de la notification : liste RGB, #RRGGBB ou nom de couleur."
-        },
-        "timeout": {
-          "name": "Délai",
-          "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
-        },
-        "buttons": {
-          "name": "Boutons",
-          "description": "Jusqu'à 4 boutons. Chacun a un libellé, un id optionnel (renvoyé dans l'évènement), des actions optionnelles à l'appui (par exemple un script) et dismiss (true par défaut)."
-        },
         "camera_entity": {
           "name": "Caméra",
           "description": "Entité caméra ou image affichée en direct."
@@ -115,12 +151,54 @@
         "refresh_rate": {
           "name": "Intervalle de rafraîchissement",
           "description": "Secondes entre deux images de la vue en direct."
+        },
+        "icon": {
+          "name": "Icône",
+          "description": "Icône Material Design, par exemple mdi:door-open."
+        },
+        "color": {
+          "name": "Couleur",
+          "description": "Couleur d'accent de la notification."
+        },
+        "timeout": {
+          "name": "Délai",
+          "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
+        },
+        "label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "action": {
+          "name": "Action",
+          "description": "Actions lancées à l'appui sur le bouton, par exemple un script."
+        },
+        "dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        }
+      },
+      "sections": {
+        "button_1": {
+          "name": "Bouton 1",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_2": {
+          "name": "Bouton 2",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_3": {
+          "name": "Bouton 3",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_4": {
+          "name": "Bouton 4",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
         }
       }
     },
     "send_camera": {
       "name": "Envoyer une caméra",
-      "description": "Affiche une vue caméra en direct par-dessus la vidéo en cours.",
+      "description": "Affiche une vue caméra en direct par-dessus la vidéo en cours. Un bouton de fermeture est ajouté si aucun ne la ferme.",
       "fields": {
         "primary": {
           "name": "Texte principal",
@@ -130,22 +208,6 @@
           "name": "Texte secondaire",
           "description": "Deuxième ligne de la notification."
         },
-        "icon": {
-          "name": "Icône",
-          "description": "Icône Material Design, par exemple mdi:door-open."
-        },
-        "color": {
-          "name": "Couleur",
-          "description": "Couleur d'accent de la notification : liste RGB, #RRGGBB ou nom de couleur."
-        },
-        "timeout": {
-          "name": "Délai",
-          "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
-        },
-        "buttons": {
-          "name": "Boutons",
-          "description": "Jusqu'à 4 boutons. Chacun a un libellé, un id optionnel (renvoyé dans l'évènement), des actions optionnelles à l'appui (par exemple un script) et dismiss (true par défaut)."
-        },
         "camera_entity": {
           "name": "Caméra",
           "description": "Entité caméra ou image affichée en direct."
@@ -153,6 +215,48 @@
         "refresh_rate": {
           "name": "Intervalle de rafraîchissement",
           "description": "Secondes entre deux images de la vue en direct."
+        },
+        "icon": {
+          "name": "Icône",
+          "description": "Icône Material Design, par exemple mdi:door-open."
+        },
+        "color": {
+          "name": "Couleur",
+          "description": "Couleur d'accent de la notification."
+        },
+        "timeout": {
+          "name": "Délai",
+          "description": "Secondes avant la disparition. 0 la garde jusqu'à l'appui sur un bouton ou sur Retour."
+        },
+        "label": {
+          "name": "Libellé",
+          "description": "Texte du bouton. Laissez vide pour ne pas afficher ce bouton."
+        },
+        "action": {
+          "name": "Action",
+          "description": "Actions lancées à l'appui sur le bouton, par exemple un script."
+        },
+        "dismiss": {
+          "name": "Fermer à l'appui",
+          "description": "Indique si l'appui sur le bouton ferme la notification."
+        }
+      },
+      "sections": {
+        "button_1": {
+          "name": "Bouton 1",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_2": {
+          "name": "Bouton 2",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_3": {
+          "name": "Bouton 3",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
+        },
+        "button_4": {
+          "name": "Bouton 4",
+          "description": "Bouton optionnel. La télécommande le sélectionne et OK l'active."
         }
       }
     },
